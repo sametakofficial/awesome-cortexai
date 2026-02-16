@@ -22,6 +22,7 @@ opencode
 | **api.claude.gg** | `@ai-sdk/openai-compatible` | Yok (strip) | [Proxy](#tool-call-proxy) | GPT-5, Grok-4, DeepSeek, Gemini vs. Gateway tool_calls + reasoning strip |
 | **codex.claude.gg** | `@ai-sdk/openai-compatible` | reasoning_effort* | Native | [Schema fix](#opencode-schema-bug) gerekli |
 | **openai.vertexapis.com** | `@ai-sdk/openai-compatible` | reasoning_effort | Native | [Schema fix](#opencode-schema-bug) gerekli |
+| **perplexity.claude.gg** | `@ai-sdk/openai-compatible` | - | - | [Perplexity Proxy](#perplexity-proxy) ile çalışıyor |
 
 ## Thinking
 
@@ -145,7 +146,32 @@ Kayıt yok, API key yok. Brave kadar iyi değil ama hesap açmak istemiyorsan i�
 ## Bilinen Limitler
 
 - **api.claude.gg thinking** — gateway `reasoning_content`'i strip ediyor, çözüm yok
-- **perplexity.claude.gg** — farklı format, opencode ile uyumsuz
+
+## Perplexity Proxy
+
+`perplexity.claude.gg` farklı bir API formatı kullanıyor (search endpoint). Repo'daki `perplexity-proxy.py` bunu OpenAI Chat Completions formatına çeviriyor — opencode direkt kullanabiliyor.
+
+```bash
+pip install flask requests
+python perplexity-proxy.py  # localhost:4016'da başlar
+```
+
+`opencode.json`'da:
+
+```json
+"perplexity.claude.gg": {
+  "npm": "@ai-sdk/openai-compatible",
+  "options": {
+    "baseURL": "http://localhost:4016/v1",
+    "apiKey": "YOUR_CORTEX_API_KEY"
+  },
+  "models": {
+    "sonar": { "tool_call": false },
+    "sonar-pro": { "tool_call": false },
+    "unlimited-ai": { "tool_call": false }
+  }
+}
+```
 
 ## Linkler
 
