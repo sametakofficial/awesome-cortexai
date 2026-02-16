@@ -27,14 +27,21 @@ opencode
 ## Thinking
 
 ```bash
-# Anthropic modelleri
+# Anthropic (Sonnet, Opus 4.5 vs.) — sadece high ve max
 opencode run --thinking -m "app.claude.gg/claude-sonnet-4-5" --variant high "prompt"
 
-# Gemini modelleri
-opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high "prompt"
-```
+# Anthropic (Opus 4.6) — low, medium, high, max
+opencode run --thinking -m "app.claude.gg/claude-opus-4-6" --variant low "prompt"
 
-Varyantlar: `low`, `default`, `high`, `max`
+# Gemini 2.5 — high ve max
+opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high "prompt"
+
+# Gemini 3 — low ve high (flash'ta ek olarak medium)
+opencode run --thinking -m "beta.vertexapis.com/gemini-3-flash-preview" --variant high "prompt"
+
+# Codex — low, medium, high (5.2+ modellerde xhigh)
+opencode run --thinking -m "codex.claude.gg/gpt-5.3-codex" --variant xhigh "prompt"
+```
 
 Codex modelleri `reasoning_effort` varyantlarını destekliyor (`low`/`medium`/`high`, 5.2+ modellerde `xhigh`). Parametre çalışıyor — model gerçekten daha fazla düşünüyor (token sayısından belli, `high` ile ~3x daha fazla) ama gateway `reasoning_content`'i strip ediyor, düşünce metni response'ta görünmüyor.
 
