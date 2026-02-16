@@ -65,7 +65,7 @@ See the [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcal
 
 We fixed it and opened a PR: [anomalyco/opencode#13738](https://github.com/anomalyco/opencode/pull/13738)
 
-To use the fix now:
+### Option 1: Use the fix from source
 
 ```bash
 git clone -b fix/sanitize-tool-schemas https://github.com/sametakofficial/opencode.git
@@ -73,6 +73,31 @@ cd opencode && bun install
 cd packages/opencode
 bun run --conditions=browser ./src/index.ts  # runs from source, no build needed
 ```
+
+### Option 2: Schema Fixer Proxy
+
+If you don't want to build from source, use the included `schema-fixer-proxy.mjs`. It's a minimal proxy (~70 lines) that fixes tool schemas on the fly — strips invalid keywords and fills missing `required` fields. No dependencies needed.
+
+```bash
+node schema-fixer-proxy.mjs  # starts on localhost:4015
+```
+
+Then point the affected providers through it in your `opencode.json`:
+
+```json
+"codex.claude.gg": {
+  "options": {
+    "baseURL": "http://localhost:4015/codex.claude.gg/v1"
+  }
+},
+"openai.vertexapis.com": {
+  "options": {
+    "baseURL": "http://localhost:4015/openai.vertexapis.com/v1"
+  }
+}
+```
+
+Works with any strict OpenAI-compatible endpoint. Once the PR is merged, you can switch back to direct URLs.
 
 ## Web Search
 
