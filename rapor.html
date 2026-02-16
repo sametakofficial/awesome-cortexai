@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Cortex AI - Provider Durum Raporu</title>
+<style>
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 10px; }
+h2 { color: #79c0ff; margin-top: 40px; }
+h3 { color: #d2a8ff; }
+table { border-collapse: collapse; width: 100%; margin: 15px 0 30px 0; font-size: 14px; }
+th { background: #161b22; color: #58a6ff; padding: 10px 12px; text-align: left; border: 1px solid #30363d; white-space: nowrap; }
+td { padding: 8px 12px; border: 1px solid #30363d; vertical-align: top; }
+tr:nth-child(even) { background: #161b22; }
+tr:nth-child(odd) { background: #0d1117; }
+tr:hover { background: #1c2333; }
+.ok { color: #3fb950; font-weight: bold; }
+.fail { color: #f85149; font-weight: bold; }
+.warn { color: #d29922; font-weight: bold; }
+.info { color: #79c0ff; }
+.note { background: #161b22; border-left: 4px solid #58a6ff; padding: 12px 16px; margin: 10px 0; border-radius: 4px; }
+.proxy-note { background: #1c1d21; border-left: 4px solid #d2a8ff; padding: 12px 16px; margin: 10px 0; border-radius: 4px; }
+.fix-note { background: #1a2a1a; border-left: 4px solid #3fb950; padding: 12px 16px; margin: 10px 0; border-radius: 4px; }
+code { background: #1c2333; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #e6edf3; }
+pre { background: #161b22; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; border: 1px solid #30363d; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin: 1px; }
+.tag-ok { background: #1a3a2a; color: #3fb950; border: 1px solid #238636; }
+.tag-fail { background: #3a1a1a; color: #f85149; border: 1px solid #da3633; }
+.tag-warn { background: #3a2a1a; color: #d29922; border: 1px solid #9e6a03; }
+.tag-proxy { background: #2a1a3a; color: #d2a8ff; border: 1px solid #8b5cf6; }
+.tag-info { background: #1a2a3a; color: #58a6ff; border: 1px solid #1f6feb; }
+.tag-fix { background: #1a3a2a; color: #3fb950; border: 1px solid #238636; }
+.summary-box { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.summary-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 24px; min-width: 200px; }
+.summary-card h4 { margin: 0 0 8px 0; color: #8b949e; font-size: 12px; text-transform: uppercase; }
+.summary-card .num { font-size: 28px; font-weight: bold; }
+a { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<h1>Cortex AI - Provider Durum Raporu</h1>
+<p style="color:#8b949e">Tarih: 15 Subat 2026 | Test: opencode run + curl + Python asyncio</p>
+
+<div class="summary-box">
+<div class="summary-card"><h4>Toplam Provider</h4><div class="num ok">8</div>Cortex AI</div>
+<div class="summary-card"><h4>Tam Calisan</h4><div class="num ok">7</div>fix + proxy ile</div>
+<div class="summary-card"><h4>PR Acildi</h4><div class="num" style="color:#3fb950">1</div><a href="https://github.com/anomalyco/opencode/pull/13738">#13738</a></div>
+<div class="summary-card"><h4>Opencode</h4><div class="num warn">1.2.4</div>bug mevcut, fix hazir</div>
+</div>
+
+<h2>1. Ana Durum Tablosu</h2>
+
+<table>
+<tr><th>Provider</th><th>Base URL</th><th>SDK</th><th>Calisiyor</th><th>Tool Call</th><th>Thinking</th><th>Notlar</th></tr>
+
+<tr>
+<td><strong>app.claude.gg</strong></td>
+<td><code>https://app.claude.gg/v1</code></td>
+<td><code>@ai-sdk/anthropic</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span></td>
+<td><span class="tag tag-ok">NATIVE</span></td>
+<td><span class="tag tag-ok">budgetTokens</span></td>
+<td>Tam performans. Tum Claude modelleri.</td>
+</tr>
+
+<tr>
+<td><strong>beta.vertexapis.com</strong></td>
+<td><code>https://beta.vertexapis.com/v1</code></td>
+<td><code>@ai-sdk/google</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span></td>
+<td><span class="tag tag-ok">NATIVE</span></td>
+<td><span class="tag tag-ok">thinkingConfig</span></td>
+<td>Tam performans. Gemini 3: thinkingLevel, Gemini 2.5: thinkingBudget.</td>
+</tr>
+
+<tr>
+<td><strong>claude.gg</strong></td>
+<td><code>https://claude.gg/v1</code></td>
+<td><code>@ai-sdk/anthropic</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span></td>
+<td><span class="tag tag-fail">STRIP</span> <span class="tag tag-proxy">PROXY FIX</span></td>
+<td><span class="tag tag-ok">budgetTokens</span></td>
+<td>Thinking calisiyor. Tool call gateway strip &rarr; xml-toolcall-proxy ile fix.</td>
+</tr>
+
+<tr>
+<td><strong>beta.claude.gg</strong></td>
+<td><code>https://beta.claude.gg/v1</code></td>
+<td><code>@ai-sdk/anthropic</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span></td>
+<td><span class="tag tag-fail">STRIP</span> <span class="tag tag-proxy">PROXY FIX</span></td>
+<td><span class="tag tag-ok">budgetTokens</span></td>
+<td>Thinking calisiyor. Tool call gateway strip &rarr; xml-toolcall-proxy ile fix.</td>
+</tr>
+
+<tr>
+<td><strong>api.claude.gg</strong></td>
+<td><code>https://api.claude.gg/v1</code></td>
+<td><code>@ai-sdk/openai-compatible</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span></td>
+<td><span class="tag tag-fail">STRIP</span> <span class="tag tag-proxy">PROXY FIX</span></td>
+<td><span class="tag tag-fail">STRIP</span></td>
+<td>Gateway tool_calls + reasoning_content strip ediyor. Proxy ile tool call calisiyor (gpt-5, grok-4, deepseek-r1, o3 test edildi). Thinking gateway strip, cozum yok.</td>
+</tr>
+
+<tr>
+<td><strong>codex.claude.gg</strong></td>
+<td><code>https://codex.claude.gg/v1</code></td>
+<td><code>@ai-sdk/openai-compatible</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span> <span class="tag tag-fix">FIX HAZIR</span></td>
+<td><span class="tag tag-ok">NATIVE</span></td>
+<td>-</td>
+<td>Opencode bug #11413. <strong>PR <a href="https://github.com/anomalyco/opencode/pull/13738">#13738</a> ile fix edildi.</strong> Gecici cozum: proxy workaround.</td>
+</tr>
+
+<tr>
+<td><strong>openai.vertexapis.com</strong></td>
+<td><code>https://openai.vertexapis.com/v1</code></td>
+<td><code>@ai-sdk/openai-compatible</code></td>
+<td><span class="tag tag-ok">CALISIYOR</span> <span class="tag tag-fix">FIX HAZIR</span></td>
+<td><span class="tag tag-ok">NATIVE</span></td>
+<td>-</td>
+<td>Opencode bug ($schema/ref). <strong>PR <a href="https://github.com/anomalyco/opencode/pull/13738">#13738</a> ile fix edildi.</strong> Gecici cozum: proxy workaround.</td>
+</tr>
+
+<tr>
+<td><strong>perplexity.claude.gg</strong></td>
+<td><code>https://perplexity.claude.gg/v1</code></td>
+<td><code>@ai-sdk/openai-compatible</code></td>
+<td><span class="tag tag-fail">TIMEOUT</span></td>
+<td><span class="tag tag-fail">YOK</span></td>
+<td><span class="tag tag-fail">YOK</span></td>
+<td>Farkli format. Timeout.</td>
+</tr>
+</table>
+
+<h2>2. Opencode Fix (PR #13738)</h2>
+
+<div class="fix-note">
+<strong>Issue:</strong> <a href="https://github.com/anomalyco/opencode/issues/13737">#13737</a> |
+<strong>PR:</strong> <a href="https://github.com/anomalyco/opencode/pull/13738">#13738</a> |
+<strong>Durum:</strong> Acik, review bekliyor<br><br>
+Opencode built-in tool schemalari (ozellikle <code>question</code>) strict validator kullanan providerlarda 400 hatasi veriyor. Iki sorun:
+<ol>
+<li><code>additionalProperties: false</code> set ama <code>multiple</code> property <code>required</code> arrayinde yok</li>
+<li>Zod <code>.meta()</code> inject ettigi <code>$schema</code> ve <code>ref</code> keywordleri gecersiz</li>
+</ol>
+Fix: <code>ProviderTransform.schema()</code> icine tek recursive <code>sanitize()</code> fonksiyonu eklendi. Tum providerlar icin calisiyor.
+</div>
+
+<h3>Fix Nasil Indirilir ve Test Edilir</h3>
+<pre>
+# 1. Fork'u klonla
+git clone -b fix/sanitize-tool-schemas https://github.com/sametakofficial/opencode.git
+cd opencode
+
+# 2. Bagimliliklari kur (bun 1.3.9+ gerekli)
+curl -fsSL https://bun.sh/install | bash
+bun install
+
+# 3. Unit testleri calistir
+cd packages/opencode
+bun test test/provider/transform.test.ts
+# 104 pass, 0 fail
+
+# 4. Source'dan calistir (build gerekmez)
+bun run --conditions=browser ./src/index.ts run -m "codex.claude.gg/gpt-5.3-codex" "What is 15*17?"
+bun run --conditions=browser ./src/index.ts run -m "openai.vertexapis.com/gemini-2.5-flash" "What is 15*17?"
+</pre>
+
+<h2>3. Proxy Workaround (PR merge olana kadar)</h2>
+
+<div class="proxy-note">
+<strong>xml-toolcall-proxy</strong> (localhost:4012) &mdash; Iki farkli amacla kullaniliyor:<br>
+<strong>1.</strong> Gateway tool_calls strip eden providerlar icin (claude.gg, beta.claude.gg, api.claude.gg) &rarr; tools'u system prompt'a XML inject<br>
+<strong>2.</strong> Opencode strict schema bug'i icin (codex.claude.gg, openai.vertexapis.com) &rarr; tools'u system prompt'a tasiyarak strict validation bypass
+</div>
+
+<table>
+<tr><th>Provider</th><th>Proxy Route</th><th>Neden Gerekli</th><th>Test Durumu</th></tr>
+<tr>
+<td><strong>api.claude.gg</strong></td>
+<td><code>localhost:4012/api.claude.gg/v1</code></td>
+<td>Gateway tool_calls strip ediyor</td>
+<td><span class="ok">gpt-5, gpt-5.1, grok-4, deepseek-r1, o3 test edildi</span></td>
+</tr>
+<tr>
+<td><strong>claude.gg</strong></td>
+<td><code>localhost:4012/claude.gg/v1</code></td>
+<td>Gateway tool_calls strip ediyor</td>
+<td><span class="ok">claude-v6 ile zaten kullaniliyor</span></td>
+</tr>
+<tr>
+<td><strong>beta.claude.gg</strong></td>
+<td><code>localhost:4012/beta.claude.gg/v1</code></td>
+<td>Gateway tool_calls strip ediyor</td>
+<td><span class="info">Beklenir</span></td>
+</tr>
+<tr>
+<td><strong>codex.claude.gg</strong></td>
+<td><code>localhost:4012/codex.claude.gg/v1</code></td>
+<td>Opencode strict schema bug (PR #13738 ile cozulecek)</td>
+<td><span class="ok">Calisiyor</span></td>
+</tr>
+<tr>
+<td><strong>openai.vertexapis.com</strong></td>
+<td><code>localhost:4012/openai.vertexapis.com/v1</code></td>
+<td>Opencode strict schema bug (PR #13738 ile cozulecek)</td>
+<td><span class="ok">Calisiyor</span></td>
+</tr>
+</table>
+
+<h3>opencode.json Proxy Ayari</h3>
+<pre>
+// codex.claude.gg - proxy workaround
+"codex.claude.gg": {
+  "npm": "@ai-sdk/openai-compatible",
+  "options": {
+    "baseURL": "http://localhost:4012/codex.claude.gg/v1",
+    "apiKey": "YOUR_KEY"
+  }
+}
+
+// openai.vertexapis.com - proxy workaround
+"openai.vertexapis.com": {
+  "npm": "@ai-sdk/openai-compatible",
+  "options": {
+    "baseURL": "http://localhost:4012/openai.vertexapis.com/v1",
+    "apiKey": "YOUR_KEY"
+  }
+}
+</pre>
+
+<h2>4. Thinking Detay Tablosu</h2>
+
+<table>
+<tr><th>Provider</th><th>SDK</th><th>Thinking Parametresi</th><th>Varyantlar</th><th>Dogruland?</th></tr>
+<tr><td><strong>app.claude.gg</strong></td><td>@ai-sdk/anthropic</td><td><code>thinking.budgetTokens</code></td><td>low/default/high/max</td><td><span class="ok">Dogrulandi</span></td></tr>
+<tr><td><strong>claude.gg</strong></td><td>@ai-sdk/anthropic</td><td><code>thinking.budgetTokens</code></td><td>low/default/high/max</td><td><span class="ok">Dogrulandi</span></td></tr>
+<tr><td><strong>beta.claude.gg</strong></td><td>@ai-sdk/anthropic</td><td><code>thinking.budgetTokens</code></td><td>low/default/high/max</td><td><span class="ok">Dogrulandi</span></td></tr>
+<tr><td><strong>beta.vertexapis.com</strong> (Gemini 3)</td><td>@ai-sdk/google</td><td><code>thinkingConfig.thinkingLevel</code></td><td>low/medium/high</td><td><span class="ok">Dogrulandi</span></td></tr>
+<tr><td><strong>beta.vertexapis.com</strong> (Gemini 2.5)</td><td>@ai-sdk/google</td><td><code>thinkingConfig.thinkingBudget</code></td><td>1024/4096/8192/-1</td><td><span class="ok">Dogrulandi</span></td></tr>
+<tr><td><strong>api.claude.gg</strong></td><td>@ai-sdk/openai-compatible</td><td>-</td><td>-</td><td><span class="fail">Gateway strip</span></td></tr>
+</table>
+
+<h2>5. Yapilan Config Degisiklikleri</h2>
+
+<table>
+<tr><th>Provider</th><th>Degisiklik</th><th>Onceki</th><th>Sonraki</th></tr>
+<tr><td><strong>claude.gg</strong></td><td>SDK</td><td>@ai-sdk/openai-compatible</td><td>@ai-sdk/anthropic</td></tr>
+<tr><td><strong>claude.gg</strong></td><td>Modeller</td><td>4 model (tarihli ID)</td><td>6 model + thinking varyantlari</td></tr>
+<tr><td><strong>beta.claude.gg</strong></td><td>baseURL</td><td>127.0.0.1:4011 (lokal proxy)</td><td>https://beta.claude.gg/v1</td></tr>
+<tr><td><strong>api.claude.gg</strong></td><td>baseURL</td><td>127.0.0.1:4011 (lokal proxy)</td><td>https://api.claude.gg/v1</td></tr>
+<tr><td><strong>api.claude.gg</strong></td><td>Modeller</td><td>22 model</td><td>24 model (+gemini-3-pro, +gemini)</td></tr>
+<tr><td><strong>app.claude.gg</strong></td><td>Thinking</td><td>Yok</td><td>budgetTokens varyantlari</td></tr>
+<tr><td><strong>codex.claude.gg</strong></td><td>Modeller</td><td>2 model</td><td>10 model</td></tr>
+<tr><td><strong>perplexity.claude.gg</strong></td><td>baseURL</td><td>127.0.0.1:4012</td><td>https://perplexity.claude.gg/v1</td></tr>
+</table>
+
+<h2>6. Bilinen Sorunlar</h2>
+
+<table>
+<tr><th>Sorun</th><th>Etkilenen</th><th>Durum</th></tr>
+<tr>
+<td>Opencode strict tool schema (bug #11413)</td>
+<td>codex.claude.gg, openai.vertexapis.com</td>
+<td><span class="ok">FIX HAZIR</span> &mdash; <a href="https://github.com/anomalyco/opencode/pull/13738">PR #13738</a>. Gecici: proxy workaround.</td>
+</tr>
+<tr>
+<td>api.claude.gg tool_calls strip</td>
+<td>api.claude.gg (tum modeller)</td>
+<td><span class="ok">COZULDU</span> &mdash; xml-toolcall-proxy ile. 5/5 model basarili.</td>
+</tr>
+<tr>
+<td>api.claude.gg reasoning strip</td>
+<td>api.claude.gg (tum modeller)</td>
+<td><span class="fail">COZUM YOK</span> &mdash; Gateway seviyesinde kisitlama.</td>
+</tr>
+<tr>
+<td>claude.gg / beta.claude.gg tool strip</td>
+<td>claude.gg, beta.claude.gg</td>
+<td><span class="ok">COZULDU</span> &mdash; xml-toolcall-proxy ile.</td>
+</tr>
+</table>
+
+<h2>7. Dokunulmayan Providerler</h2>
+
+<table>
+<tr><th>Provider</th><th>Not</th></tr>
+<tr><td>anthropic (built-in)</td><td>XML proxy uzerinden calisiyor</td></tr>
+<tr><td><strong>claude-v6</strong></td><td>DOKUNULMADI - XML proxy config</td></tr>
+<tr><td>kiro-gateway / kiro-gateway-8080 / kiro-gateway-4040</td><td>Lokal Kiro proxy, Cortex degil</td></tr>
+<tr><td>gemini-web</td><td>WebAI-to-API, Cortex degil</td></tr>
+<tr><td>codex-openai</td><td>/v1/responses endpoint yok, calismaz</td></tr>
+</table>
+
+<p style="color:#8b949e; margin-top:40px; font-size:12px;">
+Rapor: Cortex AI Provider Durum Raporu | opencode run + curl + xml-toolcall-proxy testleri | 15 Subat 2026
+</p>
+
+</body>
+</html>

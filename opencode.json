@@ -1,0 +1,760 @@
+{
+  "provider": {
+    "app.claude.gg": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://app.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-opus-4-6": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-opus-4-5": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-sonnet-4-5": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-sonnet-4": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-haiku-4-5": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        }
+      }
+    },
+    "claude.gg": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-opus-4-6": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-sonnet-4-5": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        },
+        "claude-sonnet-4": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        }
+      }
+    },
+    "beta.claude.gg": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://beta.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-sonnet-4-5-20250929": {
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "options": {
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "variants": {
+            "high": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 8000
+              }
+            },
+            "max": {
+              "thinking": {
+                "type": "enabled",
+                "budgetTokens": 16000
+              }
+            }
+          }
+        }
+      }
+    },
+    "api.claude.gg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://api.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "gpt-5": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-5.1": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-o3": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "o3": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-4.1": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "gpt-4o": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "grok-4": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "grok-3-mini": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "deepseek-r1": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "deepseek-v3": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "gemini-2.5-flash": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "gemini-2.5-pro": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        },
+        "gemini-3-pro": {
+          "tool_call": true,
+          "limit": {
+            "context": 200000,
+            "output": 16000
+          }
+        }
+      }
+    },
+    "beta.vertexapis.com": {
+      "npm": "@ai-sdk/google",
+      "options": {
+        "baseURL": "https://beta.vertexapis.com/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "gemini-2.5-flash": {
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 2048
+                }
+              }
+            },
+            "high": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 8192
+                }
+              }
+            },
+            "max": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 24576
+                }
+              }
+            }
+          }
+        },
+        "gemini-2.5-pro": {
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 2048
+                }
+              }
+            },
+            "high": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 8192
+                }
+              }
+            },
+            "max": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingBudget": 32768
+                }
+              }
+            }
+          }
+        },
+        "gemini-3-flash-preview": {
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingLevel": "low"
+                }
+              }
+            },
+            "medium": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingLevel": "medium"
+                }
+              }
+            },
+            "high": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingLevel": "high"
+                }
+              }
+            }
+          }
+        },
+        "gemini-3-pro-preview": {
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingLevel": "low"
+                }
+              }
+            },
+            "high": {
+              "options": {
+                "thinkingConfig": {
+                  "thinkingLevel": "high"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "openai.vertexapis.com": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://openai.vertexapis.com/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "google/gemini-2.5-flash": {
+          "id": "google/gemini-2.5-flash",
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          }
+        },
+        "google/gemini-2.5-pro": {
+          "id": "google/gemini-2.5-pro",
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          }
+        },
+        "google/gemini-3-flash-preview": {
+          "id": "google/gemini-3-flash-preview",
+          "tool_call": true,
+          "limit": {
+            "context": 1048576,
+            "output": 65535
+          }
+        }
+      }
+    },
+    "codex.claude.gg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://codex.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "gpt-5.3-codex": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            },
+            "xhigh": {
+              "options": {
+                "reasoning_effort": "xhigh"
+              }
+            }
+          }
+        },
+        "gpt-5.2-codex": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            },
+            "xhigh": {
+              "options": {
+                "reasoning_effort": "xhigh"
+              }
+            }
+          }
+        },
+        "gpt-5.1-codex": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-5-codex": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-5": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        },
+        "gpt-5.1": {
+          "tool_call": true,
+          "limit": {
+            "context": 128000,
+            "output": 16000
+          },
+          "variants": {
+            "low": {
+              "options": {
+                "reasoning_effort": "low"
+              }
+            },
+            "medium": {
+              "options": {
+                "reasoning_effort": "medium"
+              }
+            },
+            "high": {
+              "options": {
+                "reasoning_effort": "high"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
