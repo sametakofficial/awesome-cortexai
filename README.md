@@ -8,6 +8,13 @@ Hazır config, proxy'ler ve bilinen sorunların çözümleri.
 
 ## Kurulum
 
+### Gereksinimler
+
+- [Node.js](https://nodejs.org/) v18+ (proxy'ler ve MCP için)
+  - Linux: `curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs`
+  - macOS: `brew install node` veya [nodejs.org](https://nodejs.org/) adresinden indir
+  - Windows: [nodejs.org](https://nodejs.org/) adresinden indir veya `winget install OpenJS.NodeJS`
+
 ### 1. opencode kur
 
 ```bash
@@ -22,9 +29,11 @@ irm https://opencode.ai/install.ps1 | iex
 
 ```bash
 # Linux / macOS
+mkdir -p ~/.config/opencode
 cp opencode.json ~/.config/opencode/opencode.json
 
 # Windows (PowerShell)
+New-Item -ItemType Directory -Force "$env:APPDATA\opencode"
 Copy-Item opencode.json "$env:APPDATA\opencode\opencode.json"
 ```
 
@@ -80,35 +89,37 @@ SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thin
 
 ### api.claude.gg
 
-SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: Gateway strip ediyor
+SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: reasoning_effort (gateway strip ediyor)
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| gpt-5 | `low`, `medium`, `high` |
-| gpt-5.1 | `low`, `medium`, `high` |
-| gpt-5-mini | `minimal`, `low`, `medium`, `high` |
-| gpt-5-nano | `minimal`, `low`, `medium`, `high` |
-| gpt-o3 | `low`, `medium`, `high` |
-| o3 | `low`, `medium`, `high` |
-| o3-mini | `minimal`, `low`, `medium`, `high` |
-| gpt-4.1 | - |
-| gpt-4.1-nano | - |
-| gpt-4o | - |
-| gpt-4o-mini | - |
-| grok-4 | - |
-| grok-3-mini | - |
-| grok-3-mini-beta | - |
-| grok-2 | - |
-| deepseek-r1 | - |
-| deepseek-v3 | - |
-| deepseek-chat | - |
-| gemini-2.5-flash | - |
-| gemini-2.5-pro | - |
-| gemini-3-pro | - |
-| gemini-2.0-flash | - |
-| gemini-2.0-flash-lite | - |
-| gemini-lite | - |
-| gemini | - |
+Tüm modeller `reasoning_effort` parametresini kabul ediyor. Model daha fazla düşünüyor ama gateway `reasoning_content`'i ve token bilgisini strip ediyor — düşünce metni response'ta görünmüyor.
+
+| Model | Thinking Varyantları | Not |
+|-------|---------------------|-----|
+| gpt-5 | `low`, `medium`, `high` | |
+| gpt-5.1 | `low`, `medium`, `high` | |
+| gpt-5-mini | `minimal`, `low`, `medium`, `high` | |
+| gpt-5-nano | `minimal`, `low`, `medium`, `high` | |
+| gpt-o3 | `low`, `medium`, `high` | |
+| o3 | `low`, `medium`, `high` | |
+| o3-mini | `minimal`, `low`, `medium`, `high` | |
+| gpt-4.1 | kabul ediyor | Etkisi ölçülemiyor |
+| gpt-4.1-nano | kabul ediyor | Etkisi ölçülemiyor |
+| gpt-4o | kabul ediyor | Etkisi ölçülemiyor |
+| gpt-4o-mini | kabul ediyor | Etkisi ölçülemiyor |
+| grok-4 | kabul ediyor | Etkisi ölçülemiyor |
+| grok-3-mini | kabul ediyor | Etkisi ölçülemiyor |
+| grok-3-mini-beta | kabul ediyor | Etkisi ölçülemiyor |
+| grok-2 | kabul ediyor | Etkisi ölçülemiyor |
+| deepseek-r1 | kabul ediyor | Etkisi ölçülemiyor |
+| deepseek-v3 | kabul ediyor | Etkisi ölçülemiyor |
+| deepseek-chat | kabul ediyor | Etkisi ölçülemiyor |
+| gemini-2.5-flash | kabul ediyor | Etkisi ölçülemiyor |
+| gemini-2.0-flash | kabul ediyor | Etkisi ölçülemiyor |
+| gemini-2.0-flash-lite | kabul ediyor | Etkisi ölçülemiyor |
+| gemini-lite | kabul ediyor | Etkisi ölçülemiyor |
+| ~~gemini-2.5-pro~~ | - | API'de mevcut değil |
+| ~~gemini-3-pro~~ | - | API'de mevcut değil |
+| ~~gemini~~ | - | API'de mevcut değil |
 
 ### beta.vertexapis.com
 
@@ -129,6 +140,8 @@ SDK: `@ai-sdk/google` · Tool Call: Native · Thinking: thinkingConfig
 SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort
 [Schema fix gerekli](#opencode-schema-bug)
 
+`reasoning_effort` çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
+
 | Model | Thinking Varyantları |
 |-------|---------------------|
 | gemini-3-pro-preview | `minimal`, `low`, `medium`, `high` |
@@ -143,6 +156,8 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort
 [Schema fix gerekli](#opencode-schema-bug)
+
+`reasoning_effort` çalışıyor — model daha fazla düşünüyor (`high` ile ~3x daha fazla token) ama gateway `reasoning_content`'i strip ediyor.
 
 | Model | Thinking Varyantları |
 |-------|---------------------|
@@ -161,11 +176,11 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 SDK: `@ai-sdk/openai-compatible` · [Perplexity Proxy gerekli](#perplexity-proxy)
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| sonar | - |
-| sonar-pro | - |
-| unlimited-ai | - |
+| Model | Not |
+|-------|-----|
+| sonar | Arama motoru |
+| sonar-pro | Gelişmiş arama |
+| unlimited-ai | Sınırsız arama |
 
 ---
 
@@ -188,17 +203,24 @@ opencode run --thinking -m "beta.vertexapis.com/gemini-3-flash-preview" --varian
 opencode run --thinking -m "codex.claude.gg/gpt-5.3-codex" --variant xhigh "prompt"
 ```
 
-Codex modelleri `reasoning_effort` parametresini kabul ediyor — model gerçekten daha fazla düşünüyor (`high` ile ~3x daha fazla token) ama gateway `reasoning_content`'i strip ediyor, düşünce metni response'ta görünmüyor.
-
-openai.vertexapis.com Gemini modelleri `reasoning_effort` destekliyor ve çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
-
 ---
 
 ## Bilinen Sorunlar ve Çözümleri
 
 ### Tool Call Proxy
 
-Bazı Cortex gateway'leri tool call'ları request veya response'tan siliyor. [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) bunu çözüyor — tool'ları system prompt'a XML olarak inject ediyor, model XML tool call yazıyor, proxy bunu native formata çeviriyor.
+Bazı Cortex gateway'leri tool calling'i desteklemiyor — ya tool tanımlarını request'ten siliyor ya da modelin tool call response'unu strip ediyor. [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) bu sorunu çözüyor.
+
+Proxy nasıl çalışıyor:
+1. Gelen request'teki tool tanımlarını alıp system prompt'a XML formatında inject ediyor
+2. Model cevabında XML tool call blokları yazıyor
+3. Proxy bu XML'i parse edip native `tool_use` (Anthropic) veya `tool_calls` (OpenAI) formatına çeviriyor
+4. Tüm bu süreç streaming olarak gerçekleşiyor — text anında iletiliyor
+
+Ek özellikler:
+- Dynamic upstream routing — URL'ye domain'i yaz, proxy otomatik yönlendirir
+- Anthropic ↔ OpenAI format dönüşümü
+- Extended thinking passthrough
 
 | Provider | Sorun | Proxy çözüyor mu? |
 |----------|-------|-------------------|
@@ -206,17 +228,28 @@ Bazı Cortex gateway'leri tool call'ları request veya response'tan siliyor. [xm
 | beta.claude.gg | Gateway `tools` array'ini request'ten siliyor | Evet |
 | api.claude.gg | Gateway `tool_calls`'ı response'tan siliyor | Evet (5 model test edildi) |
 
-Kullanmak için provider'ın baseURL'sini proxy'ye yönlendir:
+#### Kurulum
+
+```bash
+git clone https://github.com/sametakofficial/xml-toolcall-proxy.git
+cd xml-toolcall-proxy
+cp .env.example .env   # API key'ini düzenle
+npm install
+node proxy.mjs          # localhost:4012'de başlar
+```
+
+Etkilenen provider'ları `opencode.json`'da proxy'ye yönlendir:
 
 ```json
 "claude.gg": {
-  "options": {
-    "baseURL": "http://localhost:4012/claude.gg/v1"
-  }
+  "options": { "baseURL": "http://localhost:4012/claude.gg/v1" }
+},
+"api.claude.gg": {
+  "options": { "baseURL": "http://localhost:4012/api.claude.gg/v1" }
 }
 ```
 
-Kurulum için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
+Detaylı bilgi için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
 
 ### Opencode Schema Bug
 
@@ -224,7 +257,19 @@ Kurulum için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-t
 
 Bunu düzelten açık bir PR var: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — codex ve vertex ile test edildi, çalışıyor.
 
-**Seçenek 1: PR'ı source'dan kullan**
+#### Seçenek 1: PR'ı source'dan çalıştır
+
+[Bun](https://bun.sh/) gerekli (v1.3.9+).
+
+```bash
+# Linux / macOS
+curl -fsSL https://bun.sh/install | bash
+
+# Windows (PowerShell)
+irm bun.sh/install.ps1 | iex
+```
+
+Sonra:
 
 ```bash
 gh pr checkout 13823 --repo anomalyco/opencode
@@ -233,13 +278,19 @@ cd packages/opencode
 bun run --conditions=browser ./src/index.ts
 ```
 
-**Seçenek 2: Schema Fixer Proxy**
+Build gerekmez, source'dan direkt çalışır. PR merge olunca normal `opencode` komutuna geri dönebilirsin.
 
-Repo'daki `schema-fixer-proxy.mjs` — ~70 satırlık minimal proxy, tool schema'larını anında düzeltiyor. Bağımlılık yok.
+#### Seçenek 2: Schema Fixer Proxy
+
+Repo'daki `schema-fixer-proxy.mjs` — ~70 satırlık minimal proxy, tool schema'larını anında düzeltiyor. Sadece Node.js gerekli, başka bağımlılık yok.
 
 ```bash
-node schema-fixer-proxy.mjs  # localhost:4015'te başlar
+# Linux / macOS / Windows (hepsinde aynı)
+node schema-fixer-proxy.mjs
+# localhost:4015'te başlar
 ```
+
+Etkilenen provider'ları proxy'ye yönlendir:
 
 ```json
 "codex.claude.gg": {
@@ -254,16 +305,27 @@ PR merge olunca direkt URL'lere geri dönebilirsin.
 
 ### api.claude.gg Thinking Strip
 
-Gateway `reasoning_content`'i response'tan siliyor. Streaming ve non-streaming test edildi, DeepSeek R1 `<think>` tag'leri de yok. Çözüm yok — gateway seviyesinde kısıtlama.
+Gateway `reasoning_content`'i response'tan siliyor. Streaming ve non-streaming test edildi, DeepSeek R1 `<think>` tag'leri de yok. Token bilgisi de strip ediliyor. Çözüm yok — gateway seviyesinde kısıtlama.
 
 ### Perplexity Proxy
 
-`perplexity.claude.gg` farklı bir API formatı kullanıyor (search endpoint). Repo'daki `perplexity-proxy.py` bunu OpenAI Chat Completions formatına çeviriyor.
+`perplexity.claude.gg` standart chat completions API'si yerine search endpoint kullanıyor. Repo'daki `perplexity-proxy.py` bu search API'sini OpenAI Chat Completions formatına çeviriyor — opencode direkt kullanabiliyor.
+
+Python 3.8+ ve `flask`, `requests` gerekli.
 
 ```bash
+# Linux / macOS
 pip install flask requests
-python perplexity-proxy.py  # localhost:4016'da başlar
+python perplexity-proxy.py
+
+# Windows
+pip install flask requests
+python perplexity-proxy.py
+
+# localhost:4016'da başlar
 ```
+
+`opencode.json`'da:
 
 ```json
 "perplexity.claude.gg": {
@@ -288,9 +350,11 @@ Web arama ciddi fark yaratıyor — model gerçek zamanlı internet bağlamı ka
 
 ### Brave Search MCP (önerilen)
 
-En iyi arama kalitesi. Ücretsiz plan günde 1000 istek, $5/ay plan ile daha fazla. Gerçekten değer — arama sonuçları ücretsiz alternatiflere göre fark edilir derecede daha iyi.
+En iyi arama kalitesi. Ücretsiz plan günde 1000 istek, $5/ay plan ile daha fazla. Arama sonuçları ücretsiz alternatiflere göre fark edilir derecede daha iyi.
 
 İpucu: sanal kartla $5'lık plana kaydol, sonra kartı kaldır. Fatura ay sonunda kesildiği için bir ay ücretsiz premium arama kullanmış olursun.
+
+Node.js v18+ gerekli (MCP server `npx` ile çalışıyor).
 
 1. [brave.com/search/api](https://brave.com/search/api/) adresinden API key al
 2. `opencode.json`'a ekle:
