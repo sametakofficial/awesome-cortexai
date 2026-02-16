@@ -104,8 +104,11 @@ Tip: sign up with a virtual card for the $5 plan, then remove the card. Billing 
 opencode has a built-in web search tool. Just export one env variable:
 
 ```bash
-echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.zshrc
-source ~/.zshrc
+# bash
+echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.bashrc && source ~/.bashrc
+
+# zsh
+echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.zshrc && source ~/.zshrc
 ```
 
 No signup, no API key. Not as good as Brave but works fine if you don't want to deal with accounts.
