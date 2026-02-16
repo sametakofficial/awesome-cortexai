@@ -210,13 +210,9 @@ opencode run --thinking -m "codex.claude.gg/gpt-5.3-codex" --variant xhigh "prom
 
 ### Tool Call Proxy
 
-Bazı Cortex gateway'leri tool calling'i desteklemiyor — ya tool tanımlarını request'ten siliyor ya da modelin tool call response'unu strip ediyor. [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) bu sorunu çözüyor.
+Bazı Cortex gateway'leri tool call'ları JSON yerine XML formatında gönderiyor — bu context sıkıştırma için daha az token kullanıyor ama opencode ve diğer IDE'ler native JSON tool call formatı bekliyor. [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) bu XML tool call'ları native JSON formatına çeviriyor.
 
-Proxy nasıl çalışıyor:
-1. Gelen request'teki tool tanımlarını alıp system prompt'a XML formatında inject ediyor
-2. Model cevabında XML tool call blokları yazıyor
-3. Proxy bu XML'i parse edip native `tool_use` (Anthropic) veya `tool_calls` (OpenAI) formatına çeviriyor
-4. Tüm bu süreç streaming olarak gerçekleşiyor — text anında iletiliyor
+Proxy [@minpeter/ai-sdk-tool-call-middleware](https://github.com/minpeter/ai-sdk-tool-call-middleware) kullanarak XML tool call'ları parse edip native `tool_use` (Anthropic) veya `tool_calls` (OpenAI) formatına dönüştürüyor. Streaming destekli — text anında iletiliyor.
 
 Ek özellikler:
 - Dynamic upstream routing — URL'ye domain'i yaz, proxy otomatik yönlendirir
