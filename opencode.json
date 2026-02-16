@@ -1,4 +1,13 @@
 {
+  "$schema": "https://opencode.ai/config.json",
+  "model": "app.claude.gg/claude-sonnet-4-5",
+  "small_model": "app.claude.gg/claude-haiku-4-5",
+  "permission": "allow",
+  "disabled_providers": [],
+  "tools": {
+    "brave-search_*": true,
+    "question": true
+  },
   "provider": {
     "app.claude.gg": {
       "npm": "@ai-sdk/anthropic",
@@ -753,6 +762,24 @@
               }
             }
           }
+        }
+      }
+    },
+    "perplexity.claude.gg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:4016/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "sonar": {
+          "tool_call": false
+        },
+        "sonar-pro": {
+          "tool_call": false
+        },
+        "unlimited-ai": {
+          "tool_call": false
         }
       }
     }
