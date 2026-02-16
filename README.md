@@ -91,35 +91,32 @@ SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thin
 
 SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: reasoning_effort (gateway strip ediyor)
 
-Tüm modeller `reasoning_effort` parametresini kabul ediyor. Model daha fazla düşünüyor ama gateway `reasoning_content`'i ve token bilgisini strip ediyor — düşünce metni response'ta görünmüyor.
+Tüm modeller `reasoning_effort` parametresini kabul ediyor (`minimal` `low` `medium` `high` `xhigh`). Model daha fazla düşünüyor ama gateway `reasoning_content`'i, `reasoning_tokens`'ı ve `tool_calls`'ı strip ediyor. Tool call için [xml-toolcall-proxy](#tool-call-proxy) gerekli.
 
-| Model | Thinking Varyantları | Not |
-|-------|---------------------|-----|
-| gpt-5 | `low`, `medium`, `high` | |
-| gpt-5.1 | `low`, `medium`, `high` | |
-| gpt-5-mini | `minimal`, `low`, `medium`, `high` | |
-| gpt-5-nano | `minimal`, `low`, `medium`, `high` | |
-| gpt-o3 | `low`, `medium`, `high` | |
-| o3 | `low`, `medium`, `high` | |
-| o3-mini | `minimal`, `low`, `medium`, `high` | |
-| gpt-4.1 | kabul ediyor | Etkisi ölçülemiyor |
-| gpt-4.1-nano | kabul ediyor | Etkisi ölçülemiyor |
-| gpt-4o | kabul ediyor | Etkisi ölçülemiyor |
-| gpt-4o-mini | kabul ediyor | Etkisi ölçülemiyor |
-| grok-4 | kabul ediyor | Etkisi ölçülemiyor |
-| grok-3-mini | kabul ediyor | Etkisi ölçülemiyor |
-| grok-3-mini-beta | kabul ediyor | Etkisi ölçülemiyor |
-| grok-2 | kabul ediyor | Etkisi ölçülemiyor |
-| deepseek-r1 | kabul ediyor | Etkisi ölçülemiyor |
-| deepseek-v3 | kabul ediyor | Etkisi ölçülemiyor |
-| deepseek-chat | kabul ediyor | Etkisi ölçülemiyor |
-| gemini-2.5-flash | kabul ediyor | Etkisi ölçülemiyor |
-| gemini-2.0-flash | kabul ediyor | Etkisi ölçülemiyor |
-| gemini-2.0-flash-lite | kabul ediyor | Etkisi ölçülemiyor |
-| gemini-lite | kabul ediyor | Etkisi ölçülemiyor |
-| ~~gemini-2.5-pro~~ | - | API'de mevcut değil |
-| ~~gemini-3-pro~~ | - | API'de mevcut değil |
-| ~~gemini~~ | - | API'de mevcut değil |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| gpt-5 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-5.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-5-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-5-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| o3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-4.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-4.1-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-4o | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-4o-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| grok-4 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| grok-3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| grok-3-mini-beta | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| grok-2 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| deepseek-r1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| deepseek-v3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| deepseek-chat | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gemini-2.5-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gemini-2.0-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gemini-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
 
 ### beta.vertexapis.com
 
