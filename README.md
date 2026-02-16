@@ -20,8 +20,8 @@ opencode
 | **claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway strips tools from request |
 | **beta.claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway strips tools from request |
 | **api.claude.gg** | `@ai-sdk/openai-compatible` | No (stripped) | [Proxy](#tool-call-proxy) | GPT-5, Grok-4, DeepSeek, Gemini etc. Gateway strips tool_calls + reasoning |
-| **codex.claude.gg** | `@ai-sdk/openai-compatible` | - | Native | Requires [schema fix](#opencode-schema-bug) |
-| **openai.vertexapis.com** | `@ai-sdk/openai-compatible` | - | Native | Requires [schema fix](#opencode-schema-bug) |
+| **codex.claude.gg** | `@ai-sdk/openai-compatible` | reasoning_effort* | Native | Requires [schema fix](#opencode-schema-bug) |
+| **openai.vertexapis.com** | `@ai-sdk/openai-compatible` | reasoning_effort | Native | Requires [schema fix](#opencode-schema-bug) |
 
 ## Thinking
 
@@ -34,6 +34,10 @@ opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high
 ```
 
 Variants: `low`, `default`, `high`, `max`
+
+Codex models also support `reasoning_effort` variants (`low`/`medium`/`high`, plus `xhigh` on 5.2+). The parameter is accepted but reasoning tokens aren't visible in the response — gateway strips them.
+
+openai.vertexapis.com Gemini models support `reasoning_effort` and it works — `high` produces ~4x more reasoning tokens than default.
 
 ## Tool Call Proxy
 
