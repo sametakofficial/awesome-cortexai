@@ -95,28 +95,28 @@ Bu API'de 20'den fazla model var — GPT-5, Grok, DeepSeek, Gemini hepsi tek key
 
 | Model | Thinking | Tool Call |
 |-------|----------|-----------|
-| gpt-5 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-5.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-5-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-5-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| o3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-4.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-4.1-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-4o | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gpt-4o-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| grok-4 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| grok-3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| grok-3-mini-beta | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| grok-2 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| deepseek-r1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| deepseek-v3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| deepseek-chat | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gemini-2.5-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gemini-2.0-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
-| gemini-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
+| gpt-5 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-5.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-5-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-5-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| o3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-4.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-4.1-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-4o | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gpt-4o-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| grok-4 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| grok-3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| grok-3-mini-beta | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| grok-2 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| deepseek-r1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| deepseek-v3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| deepseek-chat | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gemini-2.5-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✗ |
+| gemini-2.0-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
+| gemini-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✗ |
 
 ### beta.vertexapis.com
 
@@ -221,7 +221,7 @@ Bunun dışında:
 |----------|-----------|-------------------|
 | claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
 | beta.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
-| api.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet (gpt-5, gpt-5.1, grok-4, deepseek-r1, o3 test edildi) |
+| api.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | 19/21 model çalışıyor (gemini-2.5-flash ve gemini-lite hariç) |
 
 #### Nasıl kurulur?
 
