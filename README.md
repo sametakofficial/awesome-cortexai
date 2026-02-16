@@ -36,7 +36,7 @@ opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high
 
 Varyantlar: `low`, `default`, `high`, `max`
 
-Codex modelleri `reasoning_effort` varyantlarını destekliyor (`low`/`medium`/`high`, 5.2+ modellerde `xhigh`). Parametre kabul ediliyor ama reasoning token'ları response'ta görünmüyor — gateway strip ediyor.
+Codex modelleri `reasoning_effort` varyantlarını destekliyor (`low`/`medium`/`high`, 5.2+ modellerde `xhigh`). Parametre çalışıyor — model gerçekten daha fazla düşünüyor (token sayısından belli, `high` ile ~3x daha fazla) ama gateway `reasoning_content`'i strip ediyor, düşünce metni response'ta görünmüyor.
 
 openai.vertexapis.com Gemini modelleri `reasoning_effort` destekliyor ve çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
 
