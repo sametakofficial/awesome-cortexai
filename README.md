@@ -74,6 +74,42 @@ cd packages/opencode
 bun run --conditions=browser ./src/index.ts  # runs from source, no build needed
 ```
 
+## Web Search
+
+Web search makes a huge difference — the model gets real-time internet context and gives much better answers. Two options:
+
+### Brave Search MCP (recommended)
+
+Best search quality. Free tier gives 1000 requests/day, or grab the $5/mo plan for more. Honestly worth it — the search results are noticeably better than free alternatives.
+
+Tip: sign up with a virtual card for the $5 plan, then remove the card. Billing is end of month so you get a free month of premium search.
+
+1. Get an API key at [brave.com/search/api](https://brave.com/search/api/)
+2. Add to your `opencode.json`:
+
+```json
+"mcp": {
+  "brave-search": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/brave-search-mcp"],
+    "env": {
+      "BRAVE_API_KEY": "YOUR_BRAVE_API_KEY"
+    }
+  }
+}
+```
+
+### Exa Web Search (free, no API key)
+
+opencode has a built-in web search tool. Just export one env variable:
+
+```bash
+echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.zshrc
+source ~/.zshrc
+```
+
+No signup, no API key. Not as good as Brave but works fine if you don't want to deal with accounts.
+
 ## Known Limits
 
 - **api.claude.gg thinking** — gateway strips `reasoning_content`, no workaround
