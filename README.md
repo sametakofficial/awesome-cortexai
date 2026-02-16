@@ -1,21 +1,21 @@
 # awesome-cortexai
 
-[Cortex AI](https://cortexai.com.tr) provider ayarları — [opencode](https://github.com/anomalyco/opencode) ile kullanım için.
+[Cortex AI](https://cortexai.com.tr) üzerindeki tüm provider'ları [opencode](https://github.com/anomalyco/opencode) ile kullanabilmen için hazır config, proxy ve workaround'lar.
 
-Hazır config, proxy'ler ve bilinen sorunların çözümleri.
+Config'i kopyala, key'ini yaz, aç kullan.
 
 ---
 
 ## Kurulum
 
-### Gereksinimler
+### Ne lazım?
 
-- [Node.js](https://nodejs.org/) v18+ (proxy'ler ve MCP için)
+- [Node.js](https://nodejs.org/) v18+ (proxy'ler ve MCP için gerekiyor)
   - Linux: `curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs`
-  - macOS: `brew install node` veya [nodejs.org](https://nodejs.org/) adresinden indir
-  - Windows: [nodejs.org](https://nodejs.org/) adresinden indir veya `winget install OpenJS.NodeJS`
+  - macOS: `brew install node` ya da [nodejs.org](https://nodejs.org/)'dan indir
+  - Windows: [nodejs.org](https://nodejs.org/)'dan indir ya da `winget install OpenJS.NodeJS`
 
-### 1. opencode kur
+### 1. opencode'u kur
 
 ```bash
 # Linux / macOS
@@ -37,11 +37,11 @@ New-Item -ItemType Directory -Force "$env:APPDATA\opencode"
 Copy-Item opencode.json "$env:APPDATA\opencode\opencode.json"
 ```
 
-### 3. API key'ini ayarla
+### 3. API key'ini yaz
 
-`opencode.json` içindeki `YOUR_CORTEX_API_KEY` kısımlarını kendi Cortex API key'inle değiştir.
+`opencode.json` içindeki `YOUR_CORTEX_API_KEY` yazan yerleri kendi key'inle değiştir.
 
-### 4. Çalıştır
+### 4. Başla
 
 ```bash
 opencode
@@ -49,14 +49,14 @@ opencode
 
 ---
 
-## Provider ve Model Listesi
+## Provider'lar ve Modeller
 
 ### app.claude.gg
 
 SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | claude-opus-4-6-20260101 | `high`, `max` | Native |
 | claude-opus-4-5-20251101 | `high`, `max` | Native |
 | claude-sonnet-4-5-20250929 | `high`, `max` | Native |
@@ -66,10 +66,10 @@ SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 
 ### claude.gg
 
-SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: budgetTokens
+SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: budgetTokens
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | claude-opus-4-6 | `high`, `max` | Proxy |
 | claude-opus-4-5 | `high`, `max` | Proxy |
 | claude-sonnet-4-5 | `high`, `max` | Proxy |
@@ -79,22 +79,22 @@ SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thin
 
 ### beta.claude.gg
 
-SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: budgetTokens
+SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: budgetTokens
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | claude-opus-4-1-20250805 | `high`, `max` | Proxy |
 | claude-sonnet-4-5-20250929 | `high`, `max` | Proxy |
 | claude-sonnet-4-5-web | `high`, `max` | Proxy |
 
 ### api.claude.gg
 
-SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: reasoning_effort (gateway strip ediyor)
+SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: reasoning_effort
 
-Tüm modeller `reasoning_effort` parametresini kabul ediyor (`minimal` `low` `medium` `high` `xhigh`). Model daha fazla düşünüyor ama gateway `reasoning_content`'i, `reasoning_tokens`'ı ve `tool_calls`'ı strip ediyor. Tool call için [xml-toolcall-proxy](#tool-call-proxy) gerekli.
+Bu API'de 20'den fazla model var — GPT-5, Grok, DeepSeek, Gemini hepsi tek key ile. Hepsi `reasoning_effort` parametresini kabul ediyor ama gateway hem `reasoning_content`'i hem `tool_calls`'ı hem de token bilgisini siliyor. Yani thinking çalışıyor (model gerçekten daha fazla düşünüyor) ama çıktısını göremiyorsun. Tool call için de [xml-toolcall-proxy](#tool-call-proxy) şart.
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | gpt-5 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
 | gpt-5.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
 | gpt-5-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy |
@@ -122,8 +122,8 @@ Tüm modeller `reasoning_effort` parametresini kabul ediyor (`minimal` `low` `me
 
 SDK: `@ai-sdk/google` · Tool Call: Native · Thinking: thinkingConfig
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | gemini-3-pro-preview | `low`, `high` | Native |
 | gemini-3-flash-preview | `low`, `medium`, `high` | Native |
 | gemini-2.5-pro | `low`, `high`, `max` | Native |
@@ -134,13 +134,12 @@ SDK: `@ai-sdk/google` · Tool Call: Native · Thinking: thinkingConfig
 
 ### openai.vertexapis.com
 
-SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort
-[Schema fix gerekli](#opencode-schema-bug)
+SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort · [Schema fix lazım](#opencode-schema-bug)
 
-`reasoning_effort` çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
+`reasoning_effort` düzgün çalışıyor — `high` ile default'a kıyasla ~4x daha fazla reasoning token üretiyor ve bu token'lar response'ta da görünüyor.
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | gemini-3-pro-preview | `minimal`, `low`, `medium`, `high` | Native* |
 | gemini-3-flash-preview | `minimal`, `low`, `medium`, `high` | Native* |
 | gemini-2.5-pro | `minimal`, `low`, `medium`, `high` | Native* |
@@ -149,17 +148,16 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 | gemini-2.0-flash-001 | `minimal`, `low`, `medium`, `high` | Native* |
 | gemini-2.0-flash-lite-001 | `minimal`, `low`, `medium`, `high` | Native* |
 
-\* [Schema fix](#opencode-schema-bug) gerekli
+\* opencode v1.2.4'te [schema bug'ı](#opencode-schema-bug) var, fix gerekiyor
 
 ### codex.claude.gg
 
-SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort
-[Schema fix gerekli](#opencode-schema-bug)
+SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_effort · [Schema fix lazım](#opencode-schema-bug)
 
-`reasoning_effort` çalışıyor — model daha fazla düşünüyor (`high` ile ~3x daha fazla token) ama gateway `reasoning_content`'i strip ediyor.
+`reasoning_effort` çalışıyor — `high` ile ~3x daha fazla token harcıyor ama gateway düşünce metnini siliyor, sadece sonucu görüyorsun.
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | gpt-5.3-codex | `low`, `medium`, `high`, `xhigh` | Native* |
 | gpt-5.2-codex | `low`, `medium`, `high`, `xhigh` | Native* |
 | gpt-5.1-codex-max | `low`, `medium`, `high`, `xhigh` | Native* |
@@ -171,71 +169,71 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 | gpt-5.1-codex-mini | `low`, `medium`, `high` | Native* |
 | gpt-5-codex-mini | `low`, `medium`, `high` | Native* |
 
-\* [Schema fix](#opencode-schema-bug) gerekli
+\* opencode v1.2.4'te [schema bug'ı](#opencode-schema-bug) var, fix gerekiyor
 
 ### perplexity.claude.gg
 
-SDK: `@ai-sdk/openai-compatible` · [Perplexity Proxy gerekli](#perplexity-proxy)
+SDK: `@ai-sdk/openai-compatible` · [Perplexity Proxy lazım](#perplexity-proxy)
 
-| Model | Thinking Varyantları | Tool Call |
-|-------|---------------------|-----------|
+| Model | Thinking | Tool Call |
+|-------|----------|-----------|
 | sonar | - | Yok |
 | sonar-pro | - | Yok |
 | unlimited-ai | - | Yok |
 
 ---
 
-## Thinking Kullanımı
+## Thinking Nasıl Kullanılır?
 
 ```bash
-# Anthropic (Sonnet, Opus 4.5 vs.) — high, max
+# Anthropic (Sonnet, Opus 4.5 vs.) — sadece high ve max var
 opencode run --thinking -m "app.claude.gg/claude-sonnet-4-5" --variant high "prompt"
 
-# Anthropic (Opus 4.6) — low, medium, high, max
+# Anthropic (Opus 4.6) — adaptive thinking, low'dan max'a kadar
 opencode run --thinking -m "app.claude.gg/claude-opus-4-6" --variant low "prompt"
 
-# Gemini 2.5 — low, high, max
+# Gemini 2.5 — thinkingBudget ile, low/high/max
 opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high "prompt"
 
-# Gemini 3 — low, high (flash'ta ek olarak medium)
+# Gemini 3 — thinkingLevel ile, low/high (flash'ta medium de var)
 opencode run --thinking -m "beta.vertexapis.com/gemini-3-flash-preview" --variant high "prompt"
 
-# Codex — low, medium, high (5.2+ modellerde xhigh)
+# Codex — reasoning_effort ile, 5.2+ modellerde xhigh da var
 opencode run --thinking -m "codex.claude.gg/gpt-5.3-codex" --variant xhigh "prompt"
 ```
 
 ---
 
-## Bilinen Sorunlar ve Çözümleri
+## Sorunlar ve Çözümler
 
 ### Tool Call Proxy
 
-Bazı Cortex gateway'leri tool call'ları JSON yerine XML formatında gönderiyor — bu context sıkıştırma için daha az token kullanıyor ama opencode ve diğer IDE'ler native JSON tool call formatı bekliyor. [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) bu XML tool call'ları native JSON formatına çeviriyor.
+Cortex'teki bazı gateway'ler tool call'ları JSON yerine XML formatında yolluyor. Bu aslında context sıkıştırma için iyi bir şey (daha az token harcıyor) ama opencode ve diğer IDE'ler native JSON formatı bekliyor, XML'i anlamıyorlar.
 
-Proxy [@minpeter/ai-sdk-tool-call-middleware](https://github.com/minpeter/ai-sdk-tool-call-middleware) kullanarak XML tool call'ları parse edip native `tool_use` (Anthropic) veya `tool_calls` (OpenAI) formatına dönüştürüyor. Streaming destekli — text anında iletiliyor.
+[xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) tam da bunu çözüyor. [@minpeter/ai-sdk-tool-call-middleware](https://github.com/minpeter/ai-sdk-tool-call-middleware) üzerine kurulu — gelen XML tool call'ları parse edip native `tool_use` (Anthropic) ya da `tool_calls` (OpenAI) formatına çeviriyor. Streaming destekli, text anında geliyor.
 
-Ek özellikler:
-- Dynamic upstream routing — URL'ye domain'i yaz, proxy otomatik yönlendirir
-- Anthropic ↔ OpenAI format dönüşümü
-- Extended thinking passthrough
+Bunun dışında:
+- Tek proxy ile birden fazla provider'a gidebiliyorsun (URL'ye domain'i yaz, otomatik yönlendiriyor)
+- Anthropic ↔ OpenAI format dönüşümü yapıyor
+- Thinking/reasoning parametrelerini de formatlar arası taşıyor
 
-| Provider | Sorun | Proxy çözüyor mu? |
-|----------|-------|-------------------|
-| claude.gg | Gateway `tools` array'ini request'ten siliyor | Evet |
-| beta.claude.gg | Gateway `tools` array'ini request'ten siliyor | Evet |
-| api.claude.gg | Gateway `tool_calls`'ı response'tan siliyor | Evet (5 model test edildi) |
+| Provider | Ne oluyor? | Proxy çözüyor mu? |
+|----------|-----------|-------------------|
+| claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
+| beta.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
+| api.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet (gpt-5, gpt-5.1, grok-4, deepseek-r1, o3 test edildi) |
 
-#### Kurulum
+#### Nasıl kurulur?
 
 ```bash
 git clone https://github.com/sametakofficial/xml-toolcall-proxy.git
 cd xml-toolcall-proxy
-cp .env.example .env   # API key'ini düzenle
+cp .env.example .env   # key'ini yaz
 npm install
-node proxy.mjs          # localhost:4012'de başlar
+node proxy.mjs          # localhost:4012'de ayağa kalkar
 ```
 
-Etkilenen provider'ları `opencode.json`'da proxy'ye yönlendir:
+Sonra `opencode.json`'da ilgili provider'ların baseURL'sini proxy'ye çevir:
 
 ```json
 "claude.gg": {
@@ -246,17 +244,17 @@ Etkilenen provider'ları `opencode.json`'da proxy'ye yönlendir:
 }
 ```
 
-Detaylı bilgi için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
+Daha fazla detay için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
 
 ### Opencode Schema Bug
 
-`codex.claude.gg` ve `openai.vertexapis.com` opencode v1.2.4'te 400 hatası veriyor. Sebebi: built-in `question` tool schema'sında `additionalProperties: false` var ama tüm property'ler `required`'da listelenmiyor. Strict validator'lar bunu reddediyor.
+opencode v1.2.4'te `codex.claude.gg` ve `openai.vertexapis.com` 400 hatası veriyor. Sorun şu: opencode'un built-in `question` tool'unda `additionalProperties: false` var ama bazı property'ler `required` listesinde yok. Strict validation yapan sunucular bunu kabul etmiyor.
 
-Bunu düzelten açık bir PR var: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — codex ve vertex ile test edildi, çalışıyor.
+Biri bunu düzelten bir PR açmış: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — biz de test ettik, codex ve vertex'te çalışıyor.
 
-#### Seçenek 1: PR'ı source'dan çalıştır
+#### Yol 1: PR'ı source'dan çalıştır
 
-[Bun](https://bun.sh/) gerekli (v1.3.9+).
+[Bun](https://bun.sh/) lazım (v1.3.9+).
 
 ```bash
 # Linux / macOS
@@ -275,19 +273,19 @@ cd packages/opencode
 bun run --conditions=browser ./src/index.ts
 ```
 
-Build gerekmez, source'dan direkt çalışır. PR merge olunca normal `opencode` komutuna geri dönebilirsin.
+Build'e gerek yok, source'dan direkt çalışıyor. PR merge olunca normal `opencode`'a geri dönersin.
 
-#### Seçenek 2: Schema Fixer Proxy
+#### Yol 2: Schema Fixer Proxy
 
-Repo'daki `schema-fixer-proxy.mjs` — ~70 satırlık minimal proxy, tool schema'larını anında düzeltiyor. Sadece Node.js gerekli, başka bağımlılık yok.
+Bu repo'daki `schema-fixer-proxy.mjs` — 70 satırlık ufak bir proxy. Tool schema'larını uçuşta düzeltiyor. Tek bağımlılığı Node.js.
 
 ```bash
-# Linux / macOS / Windows (hepsinde aynı)
+# Her platformda aynı
 node schema-fixer-proxy.mjs
 # localhost:4015'te başlar
 ```
 
-Etkilenen provider'ları proxy'ye yönlendir:
+`opencode.json`'da ilgili provider'ları proxy'ye yönlendir:
 
 ```json
 "codex.claude.gg": {
@@ -298,31 +296,26 @@ Etkilenen provider'ları proxy'ye yönlendir:
 }
 ```
 
-PR merge olunca direkt URL'lere geri dönebilirsin.
+PR merge olunca direkt URL'lere geri dönersin.
 
-### api.claude.gg Thinking Strip
+### api.claude.gg'de Thinking Görünmüyor
 
-Gateway `reasoning_content`'i response'tan siliyor. Streaming ve non-streaming test edildi, DeepSeek R1 `<think>` tag'leri de yok. Token bilgisi de strip ediliyor. Çözüm yok — gateway seviyesinde kısıtlama.
+Gateway `reasoning_content`'i response'tan siliyor. Streaming'de de non-streaming'de de aynı. DeepSeek R1'in `<think>` tag'leri bile gelmiyor. Token sayıları da sıfır dönüyor. Yapacak bir şey yok, gateway tarafında bir kısıtlama bu.
 
 ### Perplexity Proxy
 
-`perplexity.claude.gg` standart chat completions API'si yerine search endpoint kullanıyor. Repo'daki `perplexity-proxy.py` bu search API'sini OpenAI Chat Completions formatına çeviriyor — opencode direkt kullanabiliyor.
+`perplexity.claude.gg` normal bir chat API'si değil, search endpoint'i kullanıyor. Bu repo'daki `perplexity-proxy.py` search sonuçlarını OpenAI chat completions formatına çeviriyor, opencode direkt kullanabiliyor.
 
-Python 3.8+ ve `flask`, `requests` gerekli.
+Python 3.8+ lazım, `flask` ve `requests` ile çalışıyor.
 
 ```bash
-# Linux / macOS
+# Her platformda aynı
 pip install flask requests
 python perplexity-proxy.py
-
-# Windows
-pip install flask requests
-python perplexity-proxy.py
-
 # localhost:4016'da başlar
 ```
 
-`opencode.json`'da:
+`opencode.json`'a ekle:
 
 ```json
 "perplexity.claude.gg": {
@@ -343,15 +336,15 @@ python perplexity-proxy.py
 
 ## Web Arama
 
-Web arama ciddi fark yaratıyor — model gerçek zamanlı internet bağlamı kazanıyor ve çok daha iyi cevaplar veriyor.
+Modele internet erişimi vermek ciddi fark yaratıyor. Güncel bilgiye erişiyor, çok daha isabetli cevaplar veriyor.
 
-### Brave Search MCP (önerilen)
+### Brave Search MCP (tavsiye)
 
-En iyi arama kalitesi. Ücretsiz plan günde 1000 istek, $5/ay plan ile daha fazla. Arama sonuçları ücretsiz alternatiflere göre fark edilir derecede daha iyi.
+Arama kalitesi olarak en iyisi. Ücretsiz planda günde 1000 istek var, $5/ay'lık planla daha fazla. Ücretsiz alternatiflere göre gözle görülür fark var, değer.
 
-İpucu: sanal kartla $5'lık plana kaydol, sonra kartı kaldır. Fatura ay sonunda kesildiği için bir ay ücretsiz premium arama kullanmış olursun.
+Küçük bir tüyo: sanal kartla $5'lık plana kaydol, sonra kartı kaldır. Fatura ay sonunda kesildiği için bir ay bedavaya premium arama kullanmış olursun.
 
-Node.js v18+ gerekli (MCP server `npx` ile çalışıyor).
+Node.js v18+ lazım (MCP server `npx` ile çalışıyor).
 
 1. [brave.com/search/api](https://brave.com/search/api/) adresinden API key al
 2. `opencode.json`'a ekle:
@@ -368,9 +361,9 @@ Node.js v18+ gerekli (MCP server `npx` ile çalışıyor).
 }
 ```
 
-### Exa Web Search (ücretsiz, API key gerekmez)
+### Exa Web Search (bedava, key gerekmez)
 
-opencode'un built-in web arama tool'u var. Tek bir env değişkeni export et:
+opencode'un kendi içinde bir web arama tool'u var. Tek yapman gereken bir env değişkeni set etmek:
 
 ```bash
 # Linux / macOS (bash)
@@ -384,7 +377,7 @@ echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.zshrc && source ~/.zshrc
 # Yeni terminal aç
 ```
 
-Kayıt yok, API key yok. Brave kadar iyi değil ama hesap açmak istemiyorsan işini görür.
+Kayıt yok, key yok, bedava. Brave kadar iyi değil ama hiç yoktan iyidir.
 
 ---
 
