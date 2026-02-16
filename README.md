@@ -55,37 +55,37 @@ opencode
 
 SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| claude-opus-4-6-20260101 | `high`, `max` |
-| claude-opus-4-5-20251101 | `high`, `max` |
-| claude-sonnet-4-5-20250929 | `high`, `max` |
-| claude-sonnet-4-20250514 | `high`, `max` |
-| claude-3-7-sonnet-20250219 | `high`, `max` |
-| claude-haiku-4-5-20251001 | `high`, `max` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| claude-opus-4-6-20260101 | `high`, `max` | Native |
+| claude-opus-4-5-20251101 | `high`, `max` | Native |
+| claude-sonnet-4-5-20250929 | `high`, `max` | Native |
+| claude-sonnet-4-20250514 | `high`, `max` | Native |
+| claude-3-7-sonnet-20250219 | `high`, `max` | Native |
+| claude-haiku-4-5-20251001 | `high`, `max` | Native |
 
 ### claude.gg
 
 SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: budgetTokens
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| claude-opus-4-6 | `high`, `max` |
-| claude-opus-4-5 | `high`, `max` |
-| claude-sonnet-4-5 | `high`, `max` |
-| claude-sonnet-4 | `high`, `max` |
-| claude-3-7-sonnet | `high`, `max` |
-| claude-haiku-4-5 | `high`, `max` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| claude-opus-4-6 | `high`, `max` | Proxy |
+| claude-opus-4-5 | `high`, `max` | Proxy |
+| claude-sonnet-4-5 | `high`, `max` | Proxy |
+| claude-sonnet-4 | `high`, `max` | Proxy |
+| claude-3-7-sonnet | `high`, `max` | Proxy |
+| claude-haiku-4-5 | `high`, `max` | Proxy |
 
 ### beta.claude.gg
 
 SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy gerekli](#tool-call-proxy) · Thinking: budgetTokens
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| claude-opus-4-1-20250805 | `high`, `max` |
-| claude-sonnet-4-5-20250929 | `high`, `max` |
-| claude-sonnet-4-5-web | `high`, `max` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| claude-opus-4-1-20250805 | `high`, `max` | Proxy |
+| claude-sonnet-4-5-20250929 | `high`, `max` | Proxy |
+| claude-sonnet-4-5-web | `high`, `max` | Proxy |
 
 ### api.claude.gg
 
@@ -122,15 +122,15 @@ Tüm modeller `reasoning_effort` parametresini kabul ediyor (`minimal` `low` `me
 
 SDK: `@ai-sdk/google` · Tool Call: Native · Thinking: thinkingConfig
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| gemini-3-pro-preview | `low`, `high` |
-| gemini-3-flash-preview | `low`, `medium`, `high` |
-| gemini-2.5-pro | `low`, `high`, `max` |
-| gemini-2.5-flash | `low`, `high`, `max` |
-| gemini-2.5-flash-lite | `low`, `high`, `max` |
-| gemini-2.0-flash | `minimal`, `low`, `medium`, `high` |
-| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| gemini-3-pro-preview | `low`, `high` | Native |
+| gemini-3-flash-preview | `low`, `medium`, `high` | Native |
+| gemini-2.5-pro | `low`, `high`, `max` | Native |
+| gemini-2.5-flash | `low`, `high`, `max` | Native |
+| gemini-2.5-flash-lite | `low`, `high`, `max` | Native |
+| gemini-2.0-flash | `minimal`, `low`, `medium`, `high` | Native |
+| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high` | Native |
 
 ### openai.vertexapis.com
 
@@ -139,15 +139,17 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 `reasoning_effort` çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| gemini-3-pro-preview | `minimal`, `low`, `medium`, `high` |
-| gemini-3-flash-preview | `minimal`, `low`, `medium`, `high` |
-| gemini-2.5-pro | `minimal`, `low`, `medium`, `high` |
-| gemini-2.5-flash | `minimal`, `low`, `medium`, `high` |
-| gemini-2.5-flash-lite | `minimal`, `low`, `medium`, `high` |
-| gemini-2.0-flash-001 | `minimal`, `low`, `medium`, `high` |
-| gemini-2.0-flash-lite-001 | `minimal`, `low`, `medium`, `high` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| gemini-3-pro-preview | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-3-flash-preview | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-2.5-pro | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-2.5-flash | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-2.5-flash-lite | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-2.0-flash-001 | `minimal`, `low`, `medium`, `high` | Native* |
+| gemini-2.0-flash-lite-001 | `minimal`, `low`, `medium`, `high` | Native* |
+
+\* [Schema fix](#opencode-schema-bug) gerekli
 
 ### codex.claude.gg
 
@@ -156,28 +158,30 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 `reasoning_effort` çalışıyor — model daha fazla düşünüyor (`high` ile ~3x daha fazla token) ama gateway `reasoning_content`'i strip ediyor.
 
-| Model | Thinking Varyantları |
-|-------|---------------------|
-| gpt-5.3-codex | `low`, `medium`, `high`, `xhigh` |
-| gpt-5.2-codex | `low`, `medium`, `high`, `xhigh` |
-| gpt-5.1-codex-max | `low`, `medium`, `high`, `xhigh` |
-| gpt-5.2 | `low`, `medium`, `high`, `xhigh` |
-| gpt-5.1-codex | `low`, `medium`, `high` |
-| gpt-5.1 | `low`, `medium`, `high` |
-| gpt-5-codex | `low`, `medium`, `high` |
-| gpt-5 | `low`, `medium`, `high` |
-| gpt-5.1-codex-mini | `low`, `medium`, `high` |
-| gpt-5-codex-mini | `low`, `medium`, `high` |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| gpt-5.3-codex | `low`, `medium`, `high`, `xhigh` | Native* |
+| gpt-5.2-codex | `low`, `medium`, `high`, `xhigh` | Native* |
+| gpt-5.1-codex-max | `low`, `medium`, `high`, `xhigh` | Native* |
+| gpt-5.2 | `low`, `medium`, `high`, `xhigh` | Native* |
+| gpt-5.1-codex | `low`, `medium`, `high` | Native* |
+| gpt-5.1 | `low`, `medium`, `high` | Native* |
+| gpt-5-codex | `low`, `medium`, `high` | Native* |
+| gpt-5 | `low`, `medium`, `high` | Native* |
+| gpt-5.1-codex-mini | `low`, `medium`, `high` | Native* |
+| gpt-5-codex-mini | `low`, `medium`, `high` | Native* |
+
+\* [Schema fix](#opencode-schema-bug) gerekli
 
 ### perplexity.claude.gg
 
 SDK: `@ai-sdk/openai-compatible` · [Perplexity Proxy gerekli](#perplexity-proxy)
 
-| Model | Not |
-|-------|-----|
-| sonar | Arama motoru |
-| sonar-pro | Gelişmiş arama |
-| unlimited-ai | Sınırsız arama |
+| Model | Thinking Varyantları | Tool Call |
+|-------|---------------------|-----------|
+| sonar | - | Yok |
+| sonar-pro | - | Yok |
+| unlimited-ai | - | Yok |
 
 ---
 
