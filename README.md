@@ -1,57 +1,57 @@
 # awesome-cortexai
 
-[Cortex AI](https://cortexai.com.tr) provider configs for [opencode](https://github.com/anomalyco/opencode).
+[Cortex AI](https://cortexai.com.tr) provider ayarları — [opencode](https://github.com/anomalyco/opencode) ile kullanım için.
 
-## Quick Start
+## Hızlı Başlangıç
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
 cp opencode.json ~/.config/opencode/opencode.json
-# Replace YOUR_CORTEX_API_KEY with your key
+# YOUR_CORTEX_API_KEY kısmını kendi key'inle değiştir
 opencode
 ```
 
-## Providers
+## Provider'lar
 
-| Provider | SDK | Thinking | Tool Call | Notes |
-|----------|-----|----------|-----------|-------|
-| **app.claude.gg** | `@ai-sdk/anthropic` | budgetTokens | Native | Full support, all Claude models |
-| **beta.vertexapis.com** | `@ai-sdk/google` | thinkingConfig | Native | Full support, Gemini models |
-| **claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway strips tools from request |
-| **beta.claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway strips tools from request |
-| **api.claude.gg** | `@ai-sdk/openai-compatible` | No (stripped) | [Proxy](#tool-call-proxy) | GPT-5, Grok-4, DeepSeek, Gemini etc. Gateway strips tool_calls + reasoning |
-| **codex.claude.gg** | `@ai-sdk/openai-compatible` | reasoning_effort* | Native | Requires [schema fix](#opencode-schema-bug) |
-| **openai.vertexapis.com** | `@ai-sdk/openai-compatible` | reasoning_effort | Native | Requires [schema fix](#opencode-schema-bug) |
+| Provider | SDK | Thinking | Tool Call | Not |
+|----------|-----|----------|-----------|-----|
+| **app.claude.gg** | `@ai-sdk/anthropic` | budgetTokens | Native | Tam destek, tüm Claude modelleri |
+| **beta.vertexapis.com** | `@ai-sdk/google` | thinkingConfig | Native | Tam destek, Gemini modelleri |
+| **claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway tool'ları request'ten siliyor |
+| **beta.claude.gg** | `@ai-sdk/anthropic` | budgetTokens | [Proxy](#tool-call-proxy) | Gateway tool'ları request'ten siliyor |
+| **api.claude.gg** | `@ai-sdk/openai-compatible` | Yok (strip) | [Proxy](#tool-call-proxy) | GPT-5, Grok-4, DeepSeek, Gemini vs. Gateway tool_calls + reasoning strip |
+| **codex.claude.gg** | `@ai-sdk/openai-compatible` | reasoning_effort* | Native | [Schema fix](#opencode-schema-bug) gerekli |
+| **openai.vertexapis.com** | `@ai-sdk/openai-compatible` | reasoning_effort | Native | [Schema fix](#opencode-schema-bug) gerekli |
 
 ## Thinking
 
 ```bash
-# Anthropic models
+# Anthropic modelleri
 opencode run --thinking -m "app.claude.gg/claude-sonnet-4-5" --variant high "prompt"
 
-# Gemini models
+# Gemini modelleri
 opencode run --thinking -m "beta.vertexapis.com/gemini-2.5-flash" --variant high "prompt"
 ```
 
-Variants: `low`, `default`, `high`, `max`
+Varyantlar: `low`, `default`, `high`, `max`
 
-Codex models also support `reasoning_effort` variants (`low`/`medium`/`high`, plus `xhigh` on 5.2+). The parameter is accepted but reasoning tokens aren't visible in the response — gateway strips them.
+Codex modelleri `reasoning_effort` varyantlarını destekliyor (`low`/`medium`/`high`, 5.2+ modellerde `xhigh`). Parametre kabul ediliyor ama reasoning token'ları response'ta görünmüyor — gateway strip ediyor.
 
-openai.vertexapis.com Gemini models support `reasoning_effort` and it works — `high` produces ~4x more reasoning tokens than default.
+openai.vertexapis.com Gemini modelleri `reasoning_effort` destekliyor ve çalışıyor — `high` ile default'a göre ~4x daha fazla reasoning token üretiyor.
 
 ## Tool Call Proxy
 
-Some Cortex gateways strip tool calls from requests or responses. We solved this using [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) — it moves tools into the system prompt as XML, the model responds with XML tool calls, and the proxy converts them back to native format.
+Bazı Cortex gateway'leri tool call'ları request veya response'tan siliyor. Bunu [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) ile çözdük — tool'ları system prompt'a XML olarak inject ediyor, model XML tool call yazıyor, proxy bunu native formata çeviriyor.
 
-Affected providers and what the proxy fixes:
+Etkilenen provider'lar:
 
-| Provider | Problem | Proxy fixes it? |
-|----------|---------|-----------------|
-| claude.gg | Gateway removes `tools` array from request | Yes |
-| beta.claude.gg | Gateway removes `tools` array from request | Yes |
-| api.claude.gg | Gateway removes `tool_calls` from response | Yes (5 models tested) |
+| Provider | Sorun | Proxy çözüyor mu? |
+|----------|-------|-------------------|
+| claude.gg | Gateway `tools` array'ini request'ten siliyor | Evet |
+| beta.claude.gg | Gateway `tools` array'ini request'ten siliyor | Evet |
+| api.claude.gg | Gateway `tool_calls`'ı response'tan siliyor | Evet (5 model test edildi) |
 
-To use the proxy, point the provider's baseURL through it:
+Kullanmak için provider'ın baseURL'sini proxy'ye yönlendir:
 
 ```json
 "claude.gg": {
@@ -61,32 +61,32 @@ To use the proxy, point the provider's baseURL through it:
 }
 ```
 
-See the [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy) for setup instructions.
+Kurulum için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
 
 ## Opencode Schema Bug
 
-`codex.claude.gg` and `openai.vertexapis.com` return 400 on opencode v1.2.4 because the built-in `question` tool schema has `additionalProperties: false` but doesn't list all properties in `required`. Strict validators reject this.
+`codex.claude.gg` ve `openai.vertexapis.com` opencode v1.2.4'te 400 hatası veriyor. Sebebi: built-in `question` tool schema'sında `additionalProperties: false` var ama tüm property'ler `required`'da listelenmiyor. Strict validator'lar bunu reddediyor.
 
-There's an open PR that fixes this: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — tested and confirmed working for both codex and vertex.
+Bunu düzelten açık bir PR var: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — codex ve vertex ile test edildi, çalışıyor.
 
-### Option 1: Use the PR from source
+### Seçenek 1: PR'ı source'dan kullan
 
 ```bash
 gh pr checkout 13823 --repo anomalyco/opencode
 bun install
 cd packages/opencode
-bun run --conditions=browser ./src/index.ts  # runs from source, no build needed
+bun run --conditions=browser ./src/index.ts  # build gerekmez, source'dan çalışır
 ```
 
-### Option 2: Schema Fixer Proxy
+### Seçenek 2: Schema Fixer Proxy
 
-If you don't want to build from source, use the included `schema-fixer-proxy.mjs`. It's a minimal proxy (~70 lines) that fixes tool schemas on the fly — strips invalid keywords and fills missing `required` fields. No dependencies needed.
+Source'dan çalıştırmak istemiyorsan repo'daki `schema-fixer-proxy.mjs`'yi kullan. ~70 satırlık minimal bir proxy — tool schema'larını anında düzeltiyor. Bağımlılık yok.
 
 ```bash
-node schema-fixer-proxy.mjs  # starts on localhost:4015
+node schema-fixer-proxy.mjs  # localhost:4015'te başlar
 ```
 
-Then point the affected providers through it in your `opencode.json`:
+Etkilenen provider'ları `opencode.json`'da proxy'ye yönlendir:
 
 ```json
 "codex.claude.gg": {
@@ -101,20 +101,20 @@ Then point the affected providers through it in your `opencode.json`:
 }
 ```
 
-Works with any strict OpenAI-compatible endpoint. Once the PR is merged, you can switch back to direct URLs.
+Herhangi bir strict OpenAI-uyumlu endpoint ile çalışır. PR merge olunca direkt URL'lere geri dönebilirsin.
 
-## Web Search
+## Web Arama
 
-Web search makes a huge difference — the model gets real-time internet context and gives much better answers. Two options:
+Web arama ciddi fark yaratıyor — model gerçek zamanlı internet bağlamı kazanıyor ve çok daha iyi cevaplar veriyor. İki seçenek:
 
-### Brave Search MCP (recommended)
+### Brave Search MCP (önerilen)
 
-Best search quality. Free tier gives 1000 requests/day, or grab the $5/mo plan for more. Honestly worth it — the search results are noticeably better than free alternatives.
+En iyi arama kalitesi. Ücretsiz plan günde 1000 istek veriyor, $5/ay plan ile daha fazla. Gerçekten değer — arama sonuçları ücretsiz alternatiflere göre fark edilir derecede daha iyi.
 
-Tip: sign up with a virtual card for the $5 plan, then remove the card. Billing is end of month so you get a free month of premium search.
+İpucu: sanal kartla $5'lık plana kaydol, sonra kartı kaldır. Fatura ay sonunda kesildiği için bir ay ücretsiz premium arama kullanmış olursun.
 
-1. Get an API key at [brave.com/search/api](https://brave.com/search/api/)
-2. Add to your `opencode.json`:
+1. [brave.com/search/api](https://brave.com/search/api/) adresinden API key al
+2. `opencode.json`'a ekle:
 
 ```json
 "mcp": {
@@ -128,9 +128,9 @@ Tip: sign up with a virtual card for the $5 plan, then remove the card. Billing 
 }
 ```
 
-### Exa Web Search (free, no API key)
+### Exa Web Search (ücretsiz, API key gerekmez)
 
-opencode has a built-in web search tool. Just export one env variable:
+opencode'un built-in web arama tool'u var. Tek bir env değişkeni export et:
 
 ```bash
 # bash
@@ -140,16 +140,16 @@ echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.bashrc && source ~/.bashrc
 echo 'export OPENCODE_ENABLE_EXA=1' >> ~/.zshrc && source ~/.zshrc
 ```
 
-No signup, no API key. Not as good as Brave but works fine if you don't want to deal with accounts.
+Kayıt yok, API key yok. Brave kadar iyi değil ama hesap açmak istemiyorsan işini görür.
 
-## Known Limits
+## Bilinen Limitler
 
-- **api.claude.gg thinking** — gateway strips `reasoning_content`, no workaround
-- **perplexity.claude.gg** — different format, incompatible with opencode
+- **api.claude.gg thinking** — gateway `reasoning_content`'i strip ediyor, çözüm yok
+- **perplexity.claude.gg** — farklı format, opencode ile uyumsuz
 
-## Links
+## Linkler
 
 - [Cortex AI](https://cortexai.com.tr) · [Status](https://cortexai.com.tr/status)
-- [opencode](https://github.com/anomalyco/opencode) · [PR #13738](https://github.com/anomalyco/opencode/pull/13738)
+- [opencode](https://github.com/anomalyco/opencode) · [PR #13823](https://github.com/anomalyco/opencode/pull/13823)
 - [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy)
-- [Detailed test report](rapor.html)
+- [Detaylı test raporu](rapor.html)

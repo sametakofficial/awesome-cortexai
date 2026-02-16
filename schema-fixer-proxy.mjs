@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// schema-fixer-proxy: fixes opencode's tool schemas for strict validators
-// Strips $schema/ref keywords and ensures all properties are in required
-// when additionalProperties is false. Forward proxy for codex.claude.gg,
-// openai.vertexapis.com, or any strict OpenAI-compatible endpoint.
+// schema-fixer-proxy: opencode'un tool schema'larını strict validator'lar için düzeltir
+// $schema/ref keyword'lerini siler ve additionalProperties false olduğunda
+// tüm property'leri required'a ekler. codex.claude.gg, openai.vertexapis.com
+// veya herhangi bir strict OpenAI-uyumlu endpoint için forward proxy.
 //
-// Usage: node schema-fixer-proxy.mjs
-// Then point opencode baseURL to http://localhost:4015/<target-host>/v1
+// Kullanım: node schema-fixer-proxy.mjs
+// Sonra opencode baseURL'yi http://localhost:4015/<hedef-host>/v1 olarak ayarla
 
 import http from "node:http"
 import https from "node:https"
