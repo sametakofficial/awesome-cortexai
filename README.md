@@ -67,13 +67,13 @@ See the [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcal
 
 `codex.claude.gg` and `openai.vertexapis.com` return 400 on opencode v1.2.4 because the built-in `question` tool schema has `additionalProperties: false` but doesn't list all properties in `required`. Strict validators reject this.
 
-We fixed it and opened a PR: [anomalyco/opencode#13738](https://github.com/anomalyco/opencode/pull/13738)
+There's an open PR that fixes this: [anomalyco/opencode#13823](https://github.com/anomalyco/opencode/pull/13823) — tested and confirmed working for both codex and vertex.
 
-### Option 1: Use the fix from source
+### Option 1: Use the PR from source
 
 ```bash
-git clone -b fix/sanitize-tool-schemas https://github.com/sametakofficial/opencode.git
-cd opencode && bun install
+gh pr checkout 13823 --repo anomalyco/opencode
+bun install
 cd packages/opencode
 bun run --conditions=browser ./src/index.ts  # runs from source, no build needed
 ```
