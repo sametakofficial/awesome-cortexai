@@ -55,82 +55,82 @@ opencode
 
 SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| claude-opus-4-6-20260101 | `high`, `max` | Native |
-| claude-opus-4-5-20251101 | `high`, `max` | Native |
-| claude-sonnet-4-5-20250929 | `high`, `max` | Native |
-| claude-sonnet-4-20250514 | `high`, `max` | Native |
-| claude-3-7-sonnet-20250219 | `high`, `max` | Native |
-| claude-haiku-4-5-20251001 | `high`, `max` | Native |
+| Model                      | Thinking      | Tool Call |
+| -------------------------- | ------------- | --------- |
+| claude-opus-4-6-20260101   | `high`, `max` | Native    |
+| claude-opus-4-5-20251101   | `high`, `max` | Native    |
+| claude-sonnet-4-5-20250929 | `high`, `max` | Native    |
+| claude-sonnet-4-20250514   | `high`, `max` | Native    |
+| claude-3-7-sonnet-20250219 | `high`, `max` | Native    |
+| claude-haiku-4-5-20251001  | `high`, `max` | Native    |
 
 ### claude.gg
 
-SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: budgetTokens
+SDK: `@ai-sdk/anthropic` · Tool Call: XML formatında dönüyor (çalışmıyor) · Thinking: budgetTokens
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| claude-opus-4-6 | `high`, `max` | Proxy |
-| claude-opus-4-5 | `high`, `max` | Proxy |
-| claude-sonnet-4-5 | `high`, `max` | Proxy |
-| claude-sonnet-4 | `high`, `max` | Proxy |
-| claude-3-7-sonnet | `high`, `max` | Proxy |
-| claude-haiku-4-5 | `high`, `max` | Proxy |
+| Model             | Thinking      | Tool Call |
+| ----------------- | ------------- | --------- |
+| claude-opus-4-6   | `high`, `max` | XML ✗     |
+| claude-opus-4-5   | `high`, `max` | XML ✗     |
+| claude-sonnet-4-5 | `high`, `max` | XML ✗     |
+| claude-sonnet-4   | `high`, `max` | XML ✗     |
+| claude-3-7-sonnet | `high`, `max` | XML ✗     |
+| claude-haiku-4-5  | `high`, `max` | XML ✗     |
 
 ### beta.claude.gg
 
-SDK: `@ai-sdk/anthropic` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: budgetTokens
+SDK: `@ai-sdk/anthropic` · Tool Call: XML formatında dönüyor (çalışmıyor) · Thinking: budgetTokens
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| claude-opus-4-1-20250805 | `high`, `max` | Proxy |
-| claude-sonnet-4-5-20250929 | `high`, `max` | Proxy |
-| claude-sonnet-4-5-web | `high`, `max` | Proxy |
+| Model                      | Thinking      | Tool Call |
+| -------------------------- | ------------- | --------- |
+| claude-opus-4-1-20250805   | `high`, `max` | XML ✗     |
+| claude-sonnet-4-5-20250929 | `high`, `max` | XML ✗     |
+| claude-sonnet-4-5-web      | `high`, `max` | XML ✗     |
 
 ### api.claude.gg
 
-SDK: `@ai-sdk/openai-compatible` · Tool Call: [Proxy lazım](#tool-call-proxy) · Thinking: reasoning_effort
+SDK: `@ai-sdk/openai-compatible` · Tool Call: XML formatında dönüyor (çalışmıyor) · Thinking: reasoning_effort
 
-Bu API'de 20'den fazla model var — GPT-5, Grok, DeepSeek, Gemini hepsi tek key ile. Hepsi `reasoning_effort` parametresini kabul ediyor ama gateway hem `reasoning_content`'i hem `tool_calls`'ı hem de token bilgisini siliyor. Yani thinking çalışıyor (model gerçekten daha fazla düşünüyor) ama çıktısını göremiyorsun. Tool call için de [xml-toolcall-proxy](#tool-call-proxy) şart.
+Bu API'de 20'den fazla model var — GPT-5, Grok, DeepSeek, Gemini hepsi tek key ile. Hepsi `reasoning_effort` parametresini kabul ediyor ama gateway hem `reasoning_content`'i hem `tool_calls`'ı hem de token bilgisini siliyor. Yani thinking çalışıyor (model gerçekten daha fazla düşünüyor) ama çıktısını göremiyorsun. Tool call'lar da XML formatında dönüyor, opencode bunu parse edemiyor.
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| gpt-5 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-5.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-5-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-5-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| o3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| o3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-4.1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-4.1-nano | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-4o | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gpt-4o-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| grok-4 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| grok-3-mini | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| grok-3-mini-beta | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| grok-2 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| deepseek-r1 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| deepseek-v3 | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| deepseek-chat | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gemini-2.5-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✗ |
-| gemini-2.0-flash | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✓ |
-| gemini-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | Proxy ✗ |
+| Model                 | Thinking                                    | Tool Call |
+| --------------------- | ------------------------------------------- | --------- |
+| gpt-5                 | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-5.1               | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-5-mini            | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-5-nano            | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-o3                | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| o3                    | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| o3-mini               | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-4.1               | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-4.1-nano          | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-4o                | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gpt-4o-mini           | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| grok-4                | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| grok-3-mini           | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| grok-3-mini-beta      | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| grok-2                | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| deepseek-r1           | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| deepseek-v3           | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| deepseek-chat         | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gemini-2.5-flash      | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gemini-2.0-flash      | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
+| gemini-lite           | `minimal`, `low`, `medium`, `high`, `xhigh` | XML ✗     |
 
 ### beta.vertexapis.com
 
 SDK: `@ai-sdk/google` · Tool Call: Native · Thinking: thinkingConfig
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| gemini-3-pro-preview | `low`, `high` | Native |
-| gemini-3-flash-preview | `low`, `medium`, `high` | Native |
-| gemini-2.5-pro | `low`, `high`, `max` | Native |
-| gemini-2.5-flash | `low`, `high`, `max` | Native |
-| gemini-2.5-flash-lite | `low`, `high`, `max` | Native |
-| gemini-2.0-flash | `minimal`, `low`, `medium`, `high` | Native |
-| gemini-2.0-flash-lite | `minimal`, `low`, `medium`, `high` | Native |
+| Model                  | Thinking                           | Tool Call |
+| ---------------------- | ---------------------------------- | --------- |
+| gemini-3-pro-preview   | `low`, `high`                      | Native    |
+| gemini-3-flash-preview | `low`, `medium`, `high`            | Native    |
+| gemini-2.5-pro         | `low`, `high`, `max`               | Native    |
+| gemini-2.5-flash       | `low`, `high`, `max`               | Native    |
+| gemini-2.5-flash-lite  | `low`, `high`, `max`               | Native    |
+| gemini-2.0-flash       | `minimal`, `low`, `medium`, `high` | Native    |
+| gemini-2.0-flash-lite  | `minimal`, `low`, `medium`, `high` | Native    |
 
 ### openai.vertexapis.com
 
@@ -138,15 +138,15 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 `reasoning_effort` düzgün çalışıyor — `high` ile default'a kıyasla ~4x daha fazla reasoning token üretiyor ve bu token'lar response'ta da görünüyor.
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| gemini-3-pro-preview | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-3-flash-preview | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-2.5-pro | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-2.5-flash | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-2.5-flash-lite | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-2.0-flash-001 | `minimal`, `low`, `medium`, `high` | Native* |
-| gemini-2.0-flash-lite-001 | `minimal`, `low`, `medium`, `high` | Native* |
+| Model                     | Thinking                           | Tool Call |
+| ------------------------- | ---------------------------------- | --------- |
+| gemini-3-pro-preview      | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-3-flash-preview    | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-2.5-pro            | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-2.5-flash          | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-2.5-flash-lite     | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-2.0-flash-001      | `minimal`, `low`, `medium`, `high` | Native\*  |
+| gemini-2.0-flash-lite-001 | `minimal`, `low`, `medium`, `high` | Native\*  |
 
 \* opencode v1.2.4'te [schema bug'ı](#opencode-schema-bug) var, fix gerekiyor
 
@@ -156,18 +156,18 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 `reasoning_effort` çalışıyor — `high` ile ~3x daha fazla token harcıyor ama gateway düşünce metnini siliyor, sadece sonucu görüyorsun.
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| gpt-5.3-codex | `low`, `medium`, `high`, `xhigh` | Native* |
-| gpt-5.2-codex | `low`, `medium`, `high`, `xhigh` | Native* |
-| gpt-5.1-codex-max | `low`, `medium`, `high`, `xhigh` | Native* |
-| gpt-5.2 | `low`, `medium`, `high`, `xhigh` | Native* |
-| gpt-5.1-codex | `low`, `medium`, `high` | Native* |
-| gpt-5.1 | `low`, `medium`, `high` | Native* |
-| gpt-5-codex | `low`, `medium`, `high` | Native* |
-| gpt-5 | `low`, `medium`, `high` | Native* |
-| gpt-5.1-codex-mini | `low`, `medium`, `high` | Native* |
-| gpt-5-codex-mini | `low`, `medium`, `high` | Native* |
+| Model              | Thinking                         | Tool Call |
+| ------------------ | -------------------------------- | --------- |
+| gpt-5.3-codex      | `low`, `medium`, `high`, `xhigh` | Native\*  |
+| gpt-5.2-codex      | `low`, `medium`, `high`, `xhigh` | Native\*  |
+| gpt-5.1-codex-max  | `low`, `medium`, `high`, `xhigh` | Native\*  |
+| gpt-5.2            | `low`, `medium`, `high`, `xhigh` | Native\*  |
+| gpt-5.1-codex      | `low`, `medium`, `high`          | Native\*  |
+| gpt-5.1            | `low`, `medium`, `high`          | Native\*  |
+| gpt-5-codex        | `low`, `medium`, `high`          | Native\*  |
+| gpt-5              | `low`, `medium`, `high`          | Native\*  |
+| gpt-5.1-codex-mini | `low`, `medium`, `high`          | Native\*  |
+| gpt-5-codex-mini   | `low`, `medium`, `high`          | Native\*  |
 
 \* opencode v1.2.4'te [schema bug'ı](#opencode-schema-bug) var, fix gerekiyor
 
@@ -175,11 +175,11 @@ SDK: `@ai-sdk/openai-compatible` · Tool Call: Native · Thinking: reasoning_eff
 
 SDK: `@ai-sdk/openai-compatible` · [Perplexity Proxy lazım](#perplexity-proxy)
 
-| Model | Thinking | Tool Call |
-|-------|----------|-----------|
-| sonar | - | Yok |
-| sonar-pro | - | Yok |
-| unlimited-ai | - | Yok |
+| Model        | Thinking | Tool Call |
+| ------------ | -------- | --------- |
+| sonar        | -        | Yok       |
+| sonar-pro    | -        | Yok       |
+| unlimited-ai | -        | Yok       |
 
 ---
 
@@ -206,45 +206,17 @@ opencode run --thinking -m "codex.claude.gg/gpt-5.3-codex" --variant xhigh "prom
 
 ## Sorunlar ve Çözümler
 
-### Tool Call Proxy
+### Tool Call Sorunu (XML Format)
 
 Cortex'teki bazı gateway'ler tool call'ları JSON yerine XML formatında yolluyor. Bu aslında context sıkıştırma için iyi bir şey (daha az token harcıyor) ama opencode ve diğer IDE'ler native JSON formatı bekliyor, XML'i anlamıyorlar.
 
-[xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy) tam da bunu çözüyor. [@minpeter/ai-sdk-tool-call-middleware](https://github.com/minpeter/ai-sdk-tool-call-middleware) üzerine kurulu — gelen XML tool call'ları parse edip native `tool_use` (Anthropic) ya da `tool_calls` (OpenAI) formatına çeviriyor. Streaming destekli, text anında geliyor.
+| Provider       | Ne oluyor?                                   |
+| -------------- | -------------------------------------------- |
+| claude.gg      | Tool call'lar JSON yerine XML olarak geliyor |
+| beta.claude.gg | Tool call'lar JSON yerine XML olarak geliyor |
+| api.claude.gg  | Tool call'lar JSON yerine XML olarak geliyor |
 
-Bunun dışında:
-- Tek proxy ile birden fazla provider'a gidebiliyorsun (URL'ye domain'i yaz, otomatik yönlendiriyor)
-- Anthropic ↔ OpenAI format dönüşümü yapıyor
-- Thinking/reasoning parametrelerini de formatlar arası taşıyor
-
-| Provider | Ne oluyor? | Proxy çözüyor mu? |
-|----------|-----------|-------------------|
-| claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
-| beta.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | Evet |
-| api.claude.gg | Tool call'lar JSON yerine XML olarak geliyor | 19/21 model çalışıyor (gemini-2.5-flash ve gemini-lite hariç) |
-
-#### Nasıl kurulur?
-
-```bash
-git clone https://github.com/sametakofficial/xml-toolcall-proxy.git
-cd xml-toolcall-proxy
-cp .env.example .env   # key'ini yaz
-npm install
-node proxy.mjs          # localhost:4012'de ayağa kalkar
-```
-
-Sonra `opencode.json`'da ilgili provider'ların baseURL'sini proxy'ye çevir:
-
-```json
-"claude.gg": {
-  "options": { "baseURL": "http://localhost:4012/claude.gg/v1" }
-},
-"api.claude.gg": {
-  "options": { "baseURL": "http://localhost:4012/api.claude.gg/v1" }
-}
-```
-
-Daha fazla detay için [xml-toolcall-proxy repo](https://github.com/sametakofficial/xml-toolcall-proxy)'suna bak.
+Bu provider'larda tool call çalışmıyor. Sadece sohbet/chat olarak kullanılabilirler.
 
 ### Opencode Schema Bug
 
@@ -385,4 +357,3 @@ Kayıt yok, key yok, bedava. Brave kadar iyi değil ama hiç yoktan iyidir.
 
 - [Cortex AI](https://cortexai.com.tr) · [Status](https://cortexai.com.tr/status)
 - [opencode](https://github.com/anomalyco/opencode) · [Schema Fix PR #13823](https://github.com/anomalyco/opencode/pull/13823)
-- [xml-toolcall-proxy](https://github.com/sametakofficial/xml-toolcall-proxy)
