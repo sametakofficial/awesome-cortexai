@@ -49,6 +49,68 @@ opencode
 
 ---
 
+
+## opencode + oh-my-opencode (omo) Önerilen Kurulum
+
+`opencode` bir AI coding agent'tır. `oh-my-opencode (omo)` ise farklı agent rollerini farklı modellere otomatik yöneten bir eklentidir.
+
+Önerilen model hiyerarşisi:
+- **Ana model (main):** Opus 4.6 — ağır reasoning, mimari kararlar
+- **Görev modeli (tasks):** Sonnet 4.6 — hızlı coding, exploration, review
+- **Fallback:** `codex.claude.gg/gpt-5.3-codex` — review ve alternatif çözüm
+
+`omo` kurulumu:
+```bash
+npm i -g oh-my-opencode
+```
+
+Örnek `opencode.json` (primary: Kiro proxy, fallback: app.claude.gg):
+```json
+{
+  "model": "anthropic/claude-opus-4-6",
+  "provider": {
+    "anthropic": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "http://localhost:4040/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-opus-4-6": {},
+        "claude-sonnet-4-6": {}
+      }
+    },
+    "app.claude.gg": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://app.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-opus-4-6": {},
+        "claude-sonnet-4-6": {}
+      }
+    }
+  }
+}
+```
+
+Örnek `oh-my-opencode.json` agent routing:
+```json
+{
+  "routing": {
+    "sisyphus": "anthropic/claude-opus-4-6:max",
+    "oracle": "anthropic/claude-opus-4-6:max",
+    "prometheus": "anthropic/claude-opus-4-6:max",
+    "librarian": "anthropic/claude-sonnet-4-6",
+    "explore": "anthropic/claude-sonnet-4-6",
+    "atlas": "anthropic/claude-sonnet-4-6",
+    "momus": "anthropic/claude-sonnet-4-6",
+    "reviewer": "codex.claude.gg/gpt-5.3-codex"
+  }
+}
+```
+
 ## Provider'lar ve Modeller
 
 ### app.claude.gg
@@ -58,6 +120,7 @@ SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 | Model                      | Thinking      | Tool Call |
 | -------------------------- | ------------- | --------- |
 | claude-opus-4-6-20260101   | `high`, `max` | Native    |
+| claude-sonnet-4-6          | `high`, `max` | Native    |
 | claude-opus-4-5-20251101   | `high`, `max` | Native    |
 | claude-sonnet-4-5-20250929 | `high`, `max` | Native    |
 | claude-sonnet-4-20250514   | `high`, `max` | Native    |
