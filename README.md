@@ -55,31 +55,23 @@ opencode
 `opencode` bir AI coding agent'tır. `oh-my-opencode (omo)` ise farklı agent rollerini farklı modellere otomatik yöneten bir eklentidir.
 
 Önerilen model hiyerarşisi:
-- **Ana model (main):** Opus 4.6 — ağır reasoning, mimari kararlar
-- **Görev modeli (tasks):** Sonnet 4.6 — hızlı coding, exploration, review
-- **Fallback:** `codex.claude.gg/gpt-5.3-codex` — review ve alternatif çözüm
+- **Ana model (main):** app.claude.gg/claude-opus-4-6 — ağır reasoning, mimari kararlar
+- **Görev modeli (tasks):** app.claude.gg/claude-sonnet-4-6 — hızlı coding, exploration, review
+- **Daha hafif görevler:** app.claude.gg/claude-sonnet-4-5
+- **Fallback (review/alternatif):** codex.claude.gg/gpt-5.3-codex
+
+> Not: Sonnet 4.6 **app.claude.gg** üzerinde mevcut. **claude.gg** üzerinde Sonnet 4.6 yok; istekler sessizce Sonnet 4.5'e düşebiliyor.
 
 `omo` kurulumu:
 ```bash
 npm i -g oh-my-opencode
 ```
 
-Örnek `opencode.json` (primary: Kiro proxy, fallback: app.claude.gg):
+Örnek `opencode.json` (doğrudan Cortex provider'ları):
 ```json
 {
-  "model": "anthropic/claude-opus-4-6",
+  "model": "app.claude.gg/claude-opus-4-6",
   "provider": {
-    "anthropic": {
-      "npm": "@ai-sdk/anthropic",
-      "options": {
-        "baseURL": "http://localhost:4040/v1",
-        "apiKey": "YOUR_CORTEX_API_KEY"
-      },
-      "models": {
-        "claude-opus-4-6": {},
-        "claude-sonnet-4-6": {}
-      }
-    },
     "app.claude.gg": {
       "npm": "@ai-sdk/anthropic",
       "options": {
@@ -88,25 +80,45 @@ npm i -g oh-my-opencode
       },
       "models": {
         "claude-opus-4-6": {},
-        "claude-sonnet-4-6": {}
+        "claude-sonnet-4-6": {},
+        "claude-sonnet-4-5": {}
+      }
+    },
+    "codex.claude.gg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://codex.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "gpt-5.3-codex": {}
       }
     }
   }
 }
 ```
 
-Örnek `oh-my-opencode.json` agent routing:
+Örnek `oh-my-opencode.json` (gerçek schema):
 ```json
 {
-  "routing": {
-    "sisyphus": "anthropic/claude-opus-4-6:max",
-    "oracle": "anthropic/claude-opus-4-6:max",
-    "prometheus": "anthropic/claude-opus-4-6:max",
-    "librarian": "anthropic/claude-sonnet-4-6",
-    "explore": "anthropic/claude-sonnet-4-6",
-    "atlas": "anthropic/claude-sonnet-4-6",
-    "momus": "anthropic/claude-sonnet-4-6",
-    "reviewer": "codex.claude.gg/gpt-5.3-codex"
+  "agents": {
+    "sisyphus": { "model": "app.claude.gg/claude-opus-4-6", "variant": "max" },
+    "oracle": { "model": "app.claude.gg/claude-opus-4-6", "variant": "max" },
+    "prometheus": { "model": "app.claude.gg/claude-opus-4-6", "variant": "max" },
+    "librarian": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "explore": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "atlas": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "momus": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "reviewer": { "model": "codex.claude.gg/gpt-5.3-codex" }
+  },
+  "categories": {
+    "visual-engineering": { "model": "app.claude.gg/claude-opus-4-6", "variant": "max" },
+    "ultrabrain": { "model": "app.claude.gg/claude-opus-4-6", "variant": "max" },
+    "quick": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "unspecified-low": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "unspecified-high": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "writing": { "model": "app.claude.gg/claude-sonnet-4-6" },
+    "review": { "model": "codex.claude.gg/gpt-5.3-codex" }
   }
 }
 ```
