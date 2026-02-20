@@ -49,6 +49,87 @@ opencode
 
 ---
 
+
+## opencode + oh-my-opencode (omo) Önerilen Kurulum
+
+[opencode](https://github.com/anomalyco/opencode) bir AI coding agent'tır. [oh-my-opencode (omo)](https://github.com/code-yeongyu/oh-my-opencode) ise farklı agent rollerini farklı modellere otomatik yöneten bir eklentidir.
+
+### Kurulum
+
+```bash
+npm i -g oh-my-opencode
+```
+
+### Önerilen Model Hiyerarşisi
+
+| Rol | Model | Açıklama |
+|-----|-------|----------|
+| Ana model (main) | `app.claude.gg/claude-opus-4-6-20260101` | Ağır reasoning, mimari kararlar |
+| Görev modeli (tasks) | `app.claude.gg/claude-sonnet-4-6-20260101` | Hızlı coding, exploration, review |
+| Fallback | `codex.claude.gg/gpt-5.3-codex` | Review ve alternatif çözüm |
+
+### Örnek `opencode.json` (sadece ilgili kısım)
+
+```json
+{
+  "model": "app.claude.gg/claude-opus-4-6-20260101",
+  "provider": {
+    "app.claude.gg": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "https://app.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "claude-opus-4-6-20260101": { "tool_call": true, "reasoning": true },
+        "claude-sonnet-4-6-20260101": { "tool_call": true, "reasoning": true },
+        "claude-sonnet-4-5-20250929": { "tool_call": true, "reasoning": true }
+      }
+    },
+    "codex.claude.gg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://codex.claude.gg/v1",
+        "apiKey": "YOUR_CORTEX_API_KEY"
+      },
+      "models": {
+        "gpt-5.3-codex": { "tool_call": true }
+      }
+    }
+  }
+}
+```
+
+### Örnek `oh-my-opencode.json`
+
+```json
+{
+  "agents": {
+    "sisyphus": { "model": "app.claude.gg/claude-opus-4-6-20260101", "variant": "max" },
+    "oracle": { "model": "app.claude.gg/claude-opus-4-6-20260101", "variant": "max" },
+    "prometheus": { "model": "app.claude.gg/claude-opus-4-6-20260101", "variant": "max" },
+    "librarian": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "explore": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "atlas": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "momus": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "reviewer": { "model": "codex.claude.gg/gpt-5.3-codex" }
+  },
+  "categories": {
+    "visual-engineering": { "model": "app.claude.gg/claude-opus-4-6-20260101", "variant": "max" },
+    "ultrabrain": { "model": "app.claude.gg/claude-opus-4-6-20260101", "variant": "max" },
+    "quick": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "unspecified-low": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "unspecified-high": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "writing": { "model": "app.claude.gg/claude-sonnet-4-6-20260101" },
+    "review": { "model": "codex.claude.gg/gpt-5.3-codex" }
+  }
+}
+```
+
+> **Not:** Sonnet 4.6, `app.claude.gg` ve `claude.gg` üzerinde `claude-sonnet-4-6-20260101` model ID'si ile kullanılabilir.
+
+---
+
 ## Provider'lar ve Modeller
 
 ### app.claude.gg
@@ -58,6 +139,7 @@ SDK: `@ai-sdk/anthropic` · Tool Call: Native · Thinking: budgetTokens
 | Model                      | Thinking      | Tool Call |
 | -------------------------- | ------------- | --------- |
 | claude-opus-4-6-20260101   | `high`, `max` | Native    |
+| claude-sonnet-4-6-20260101 | `high`, `max` | Native    |
 | claude-opus-4-5-20251101   | `high`, `max` | Native    |
 | claude-sonnet-4-5-20250929 | `high`, `max` | Native    |
 | claude-sonnet-4-20250514   | `high`, `max` | Native    |
@@ -71,6 +153,7 @@ SDK: `@ai-sdk/anthropic` · Tool Call: XML formatında dönüyor (çalışmıyor
 | Model             | Thinking      | Tool Call |
 | ----------------- | ------------- | --------- |
 | claude-opus-4-6   | `high`, `max` | XML ✗     |
+| claude-sonnet-4-6-20260101 | `high`, `max` | XML ✗     |
 | claude-opus-4-5   | `high`, `max` | XML ✗     |
 | claude-sonnet-4-5 | `high`, `max` | XML ✗     |
 | claude-sonnet-4   | `high`, `max` | XML ✗     |
