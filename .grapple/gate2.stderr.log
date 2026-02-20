@@ -1,5 +1,0 @@
-[0;34m[grapple][0m run_gate(gate2_reviewer): attempt 1/3 with model=codex.claude.gg/gpt-5.3-codex, timeout=180s
-[0;31m[grapple ✗][0m parse_gate_json: empty input
-[0;31m[grapple ✗][0m run_gate(gate2_reviewer): failed to parse JSON from output
-[1;33m[grapple ⚠][0m run_gate(gate2_reviewer): falling back to cliproxyapi/gpt-5.3-codex (parse failure)
-[0;34m[grapple][0m run_gate(gate2_reviewer): attempt 2/3 with model=cliproxyapi/gpt-5.3-codex, timeout=180s
