@@ -353,7 +353,110 @@ Kayıt yok, key yok, bedava. Brave kadar iyi değil ama hiç yoktan iyidir.
 
 ---
 
+## Replicate Split Proxy (Gate AI)
+
+### Neden bu proxy'yi geliştirdik?
+
+[Gate AI](https://api.gateai.app) Replicate-uyumlu bir API provider. Replicate'teki yüzlerce AI modelini (görsel üretim, video, TTS, STT, upscale vs.) tek bir API key ile kullanabiliyorsun. Ama bir sınırlaması var: Gate AI sadece **prediction endpoint'lerini** destekliyor — yani model çalıştırma, sonuç sorgulama, iptal etme. Metadata endpoint'leri (`list_models`, `get_models`, `search_models`, `get_account`, `list_collections` vs.) 400 hatası veriyor.
+
+Bu da şu demek: [replicate-mcp](https://www.npmjs.com/package/replicate-mcp) sunucusunu Gate AI ile kullandığında model arayamıyorsun, model bilgisi çekemiyorsun, input schema'sını göremiyorsun. AI asistanın hangi modeli nasıl kullanacağını bilemez hale geliyor.
+
+Çözüm basit: arada bir proxy koy. Proxy gelen isteğe bakıyor:
+- **Prediction istekleri** (`/v1/predictions`, `/v1/models/*/predictions` vs.) → **Gate AI**'a gider (para burada harcanıyor)
+- **Metadata istekleri** (`/v1/models`, `/v1/account`, `/v1/collections` vs.) → **gerçek Replicate API**'ye gider (ücretsiz, para harcamaz)
+
+Böylece MCP'nin tüm 35 tool'u çalışır hale geliyor. Model arama, bilgi çekme, input schema'sı okuma Replicate'ten; asıl model çalıştırma Gate AI'dan.
+
+### Ne lazım?
+
+- Node.js v18+
+- Gate AI API key'i (prediction'lar için)
+- Replicate API token'ı (metadata için, [replicate.com/account/api-tokens](https://replicate.com/account/api-tokens) adresinden ücretsiz alınır)
+
+### Dosyalar
+
+| Dosya | Ne işe yarıyor |
+|-------|----------------|
+| `replicate-proxy.js` | Split proxy — istekleri Gate AI ve Replicate arasında yönlendiriyor |
+| `replicate-mcp.sh` | MCP wrapper — proxy'yi başlatıp replicate-mcp'yi proxy üzerinden çalıştırıyor |
+
+### Kurulum
+
+#### 1. Proxy'yi test et
+
+```bash
+# Proxy'yi başlat
+GATEAI_API_TOKEN="YOUR_GATEAI_KEY" \
+REPLICATE_API_TOKEN="YOUR_REPLICATE_TOKEN" \
+node replicate-proxy.js
+
+# Başka bir terminalde test et
+curl http://localhost:9877/v1/account                    # → Replicate'e gider
+curl http://localhost:9877/v1/models/minimax/speech-2.8-turbo  # → Replicate'e gider
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"input":{"text":"test"}}' \
+  http://localhost:9877/v1/models/minimax/speech-2.8-turbo/predictions  # → Gate AI'a gider
+```
+
+#### 2. opencode'a ekle
+
+`opencode.json`'daki `mcp` bölümüne:
+
+```json
+"replicate": {
+  "type": "local",
+  "command": ["bash", "/FULL/PATH/TO/replicate-mcp.sh"],
+  "enabled": true,
+  "environment": {
+    "GATEAI_API_TOKEN": "YOUR_GATEAI_KEY",
+    "REPLICATE_API_TOKEN": "YOUR_REPLICATE_TOKEN"
+  },
+  "timeout": 120000
+}
+```
+
+`tools` bölümüne:
+
+```json
+"tools": {
+  "replicate_*": true
+}
+```
+
+#### 3. opencode'u yeniden başlat
+
+`replicate_*` tool'ları artık aktif. Model arayabilir, bilgi çekebilir, prediction oluşturabilirsin.
+
+### Routing tablosu
+
+| Endpoint | Nereye gider | Ücret |
+|----------|-------------|-------|
+| `POST /v1/predictions` | Gate AI | Ücretli |
+| `GET /v1/predictions/*` | Gate AI | Ücretsiz |
+| `POST /v1/predictions/*/cancel` | Gate AI | Ücretsiz |
+| `POST /v1/models/*/predictions` | Gate AI | Ücretli |
+| `POST /v1/deployments/*/predictions` | Gate AI | Ücretli |
+| `POST /v1/trainings` | Gate AI | Ücretli |
+| `GET /v1/account` | Replicate | Ücretsiz |
+| `GET /v1/models` | Replicate | Ücretsiz |
+| `GET /v1/models/*` | Replicate | Ücretsiz |
+| `QUERY /v1/models` (search) | Replicate | Ücretsiz |
+| `GET /v1/collections` | Replicate | Ücretsiz |
+| `GET /v1/hardware` | Replicate | Ücretsiz |
+
+### Ortam değişkenleri
+
+| Değişken | Zorunlu | Açıklama |
+|----------|---------|----------|
+| `GATEAI_API_TOKEN` | Evet | Gate AI API key'i — prediction'lar buraya gider |
+| `REPLICATE_API_TOKEN` | Evet | Replicate token'ı — metadata buraya gider (ücretsiz) |
+| `PROXY_PORT` | Hayır | Proxy portu (varsayılan: 9877) |
+
+---
+
 ## Linkler
 
 - [Cortex AI](https://cortexai.com.tr) · [Status](https://cortexai.com.tr/status)
 - [opencode](https://github.com/anomalyco/opencode) · [Schema Fix PR #13823](https://github.com/anomalyco/opencode/pull/13823)
+- [Replicate](https://replicate.com) · [replicate-mcp](https://www.npmjs.com/package/replicate-mcp)
+- [Gate AI](https://api.gateai.app)
