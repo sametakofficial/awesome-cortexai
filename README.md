@@ -249,11 +249,13 @@ Build'e gerek yok, source'dan direkt çalışıyor. PR merge olunca normal `open
 
 #### Yol 2: Schema Fixer Proxy
 
-Bu repo'daki `schema-fixer-proxy.mjs` — 70 satırlık ufak bir proxy. Tool schema'larını uçuşta düzeltiyor. Tek bağımlılığı Node.js.
+Bu repo'daki `proxies/schema-fixer/proxy.mjs` — 70 satırlık ufak bir proxy. Tool schema'larını uçuşta düzeltiyor. Tek bağımlılığı Node.js.
 
 ```bash
 # Her platformda aynı
-node schema-fixer-proxy.mjs
+cd proxies/schema-fixer
+cp .env.example .env  # gerekirse portu değiştir
+node proxy.mjs
 # localhost:4015'te başlar
 ```
 
@@ -276,14 +278,16 @@ Gateway `reasoning_content`'i response'tan siliyor. Streaming'de de non-streamin
 
 ### Perplexity Proxy
 
-`perplexity.claude.gg` normal bir chat API'si değil, search endpoint'i kullanıyor. Bu repo'daki `perplexity-proxy.py` search sonuçlarını OpenAI chat completions formatına çeviriyor, opencode direkt kullanabiliyor.
+`perplexity.claude.gg` normal bir chat API'si değil, search endpoint'i kullanıyor. Bu repo'daki `proxies/perplexity/proxy.py` search sonuçlarını OpenAI chat completions formatına çeviriyor, opencode direkt kullanabiliyor.
 
 Python 3.8+ lazım, `flask` ve `requests` ile çalışıyor.
 
 ```bash
 # Her platformda aynı
+cd proxies/perplexity
+cp .env.example .env  # API key'ini yaz
 pip install flask requests
-python perplexity-proxy.py
+python proxy.py
 # localhost:4016'da başlar
 ```
 
@@ -377,8 +381,9 @@ Böylece MCP'nin tüm 35 tool'u çalışır hale geliyor. Model arama, bilgi çe
 
 | Dosya | Ne işe yarıyor |
 |-------|----------------|
-| `replicate-proxy.js` | Split proxy — istekleri Gate AI ve Replicate arasında yönlendiriyor |
-| `replicate-mcp.sh` | MCP wrapper — proxy'yi başlatıp replicate-mcp'yi proxy üzerinden çalıştırıyor |
+| `proxies/replicate/proxy.js` | Split proxy — istekleri Gate AI ve Replicate arasında yönlendiriyor |
+| `proxies/replicate/start-mcp.sh` | MCP wrapper — proxy'yi başlatıp replicate-mcp'yi proxy üzerinden çalıştırıyor |
+| `proxies/replicate/.env.example` | Ortam değişkenleri şablonu |
 
 ### Kurulum
 
@@ -386,9 +391,12 @@ Böylece MCP'nin tüm 35 tool'u çalışır hale geliyor. Model arama, bilgi çe
 
 ```bash
 # Proxy'yi başlat
-GATEAI_API_TOKEN="YOUR_GATEAI_KEY" \
-REPLICATE_API_TOKEN="YOUR_REPLICATE_TOKEN" \
-node replicate-proxy.js
+cd proxies/replicate
+cp .env.example .env  # key'leri yaz
+source .env && \
+GATEAI_API_TOKEN="$GATEAI_API_TOKEN" \
+REPLICATE_API_TOKEN="$REPLICATE_API_TOKEN" \
+node proxy.js
 
 # Başka bir terminalde test et
 curl http://localhost:9877/v1/account                    # → Replicate'e gider
@@ -405,7 +413,7 @@ curl -X POST -H "Content-Type: application/json" \
 ```json
 "replicate": {
   "type": "local",
-  "command": ["bash", "/FULL/PATH/TO/replicate-mcp.sh"],
+  "command": ["bash", "/FULL/PATH/TO/proxies/replicate/start-mcp.sh"],
   "enabled": true,
   "environment": {
     "GATEAI_API_TOKEN": "YOUR_GATEAI_KEY",
