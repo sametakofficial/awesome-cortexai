@@ -385,6 +385,8 @@ Böylece MCP'nin tüm 35 tool'u çalışır hale geliyor. Model arama, bilgi çe
 | `proxies/replicate/start-mcp.sh` | MCP wrapper — proxy'yi başlatıp replicate-mcp'yi proxy üzerinden çalıştırıyor |
 | `proxies/replicate/.env.example` | Ortam değişkenleri şablonu |
 
+> Proxy sayesinde MCP'nin `search_models` ve `get_models` tool'ları çalışıyor — AI modelleri gerçek zamanlı arayıp bilgi çekebiliyor. Ayrıca Replicate'in resmi [`all-the-public-replicate-models`](https://github.com/replicate/all-the-public-replicate-models) npm paketi tüm public model metadata'sını içeriyor.
+
 ### Kurulum
 
 #### 1. Proxy'yi test et
