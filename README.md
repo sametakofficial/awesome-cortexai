@@ -464,6 +464,64 @@ curl -X POST -H "Content-Type: application/json" \
 
 ---
 
+## Replicate CLI (MCP Alternatifi)
+
+### Neden?
+
+OpenClaw gibi agent runtime'ları MCP desteklemiyor — felsefe olarak CLI komutları tercih ediyorlar. Bu CLI tool, replicate-mcp'nin yaptığı her şeyi tek bir `replicate` komutuyla yapıyor. Agent'ın `exec` tool'u ile direkt çağırması yeterli.
+
+Aynı split routing mantığı: metadata Replicate'ten (ücretsiz), prediction'lar Gate AI'dan.
+
+### Dosyalar
+
+| Dosya | Ne işe yarıyor |
+|-------|----------------|
+| `proxies/replicate/replicate-cli.sh` | Tek dosya CLI — proxy'ye gerek yok, direkt API'lere gider |
+
+### Kurulum
+
+```bash
+# Script'i PATH'e ekle
+chmod +x proxies/replicate/replicate-cli.sh
+ln -sf $(pwd)/proxies/replicate/replicate-cli.sh /usr/local/bin/replicate
+
+# .env'den key'leri yükle veya export et
+export GATEAI_API_TOKEN="YOUR_GATEAI_KEY"
+export REPLICATE_API_TOKEN="YOUR_REPLICATE_TOKEN"
+```
+
+### Kullanım
+
+```bash
+# Model ara
+replicate search "text to speech"
+# minimax/speech-02-turbo | Text-to-Audio... | runs:10054059
+# jaaari/kokoro-82m | Kokoro v1.0... | runs:80592018
+
+# Model input schema'sını gör
+replicate schema minimax/speech-2.8-turbo
+# Model: minimax/speech-2.8-turbo
+# Description: Turn text into natural, expressive speech...
+# Input schema:
+#   text (string): Text to narrate (max 10,000 characters)...
+#   voice_id (string): Voice to synthesize...
+
+# Prediction oluştur (Gate AI üzerinden)
+replicate run minimax/speech-2.8-turbo '{"text":"Merhaba dünya"}'
+# {"id":"abc123","status":"starting",...}
+
+# Sonucu bekle (2s aralıklarla poll eder, max 60s)
+replicate poll abc123
+
+# Model detayı (ham JSON)
+replicate info black-forest-labs/flux-schnell
+
+# Koleksiyonları listele
+replicate collections
+```
+
+---
+
 ## Linkler
 
 - [Cortex AI](https://cortexai.com.tr) · [Status](https://cortexai.com.tr/status)
