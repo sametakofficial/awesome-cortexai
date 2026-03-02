@@ -3,10 +3,15 @@
 # Kullanım: ./stt.sh [süre_saniye]
 # Süre verilmezse Enter'a basana kadar kayıt yapar
 
-API_KEY="sk-0f2246e77aa642cfafd6c4b0dd5fe14d"
+API_KEY="${VERTEX_API_KEY:-}"
 AUDIO_FILE="/tmp/stt_record.wav"
 
 DURATION="${1:-}"
+
+if [ -z "$API_KEY" ]; then
+    echo "ERROR: Set VERTEX_API_KEY before running this script"
+    exit 1
+fi
 
 echo "🎤 Kayıt başlıyor..."
 if [ -n "$DURATION" ]; then

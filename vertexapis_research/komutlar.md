@@ -1,6 +1,6 @@
 # Google Gemini - aiplatform.vertexapis.com Komutları
 
-API Key: `sk-0f2246e77aa642cfafd6c4b0dd5fe14d`
+API Key: `sk-your-api-key-here`
 Base URL: `https://aiplatform.vertexapis.com/v1/models`
 
 ---
@@ -10,7 +10,7 @@ Base URL: `https://aiplatform.vertexapis.com/v1/models`
 ## 1. Pro Non-Streaming (EN İYİ KALİTE)
 
 ```bash
-curl -s --max-time 60 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 60 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-pro-tts:generateContent" \
   -d '{"contents":[{"role":"user","parts":[{"text":"METNİ BURAYA YAZ"}]}],"generationConfig":{"responseModalities":["AUDIO"],"speechConfig":{"voiceConfig":{"prebuiltVoiceConfig":{"voiceName":"Kore"}}}}}' \
   | python3 -c "import json,sys,base64,struct;d=json.load(sys.stdin);pcm=base64.b64decode(d['candidates'][0]['content']['parts'][0]['inlineData']['data']);sr=24000;ds=len(pcm);hdr=struct.pack('<4sI4s4sIHHIIHH4sI',b'RIFF',36+ds,b'WAVE',b'fmt ',16,1,1,sr,sr*2,2,16,b'data',ds);open('/tmp/kore_pro.wav','wb').write(hdr+pcm);print(f'OK {ds/(sr*2):.1f}s')" \
@@ -20,7 +20,7 @@ curl -s --max-time 60 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## 2. Pro Streaming (UYARI: TTS kalitesi non-streaming'den düşük)
 
 ```bash
-curl -s --max-time 60 -N -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 60 -N -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-pro-tts:streamGenerateContent" \
   -d '{"contents":[{"role":"user","parts":[{"text":"METNİ BURAYA YAZ"}]}],"generationConfig":{"responseModalities":["AUDIO"],"speechConfig":{"voiceConfig":{"prebuiltVoiceConfig":{"voiceName":"Kore"}}}}}' \
   | python3 -c "
@@ -39,7 +39,7 @@ open('/tmp/kore_pro_stream.wav','wb').write(hdr+pcm);print(f'OK {ds/(sr*2):.1f}s
 ## 3. Flash Non-Streaming
 
 ```bash
-curl -s --max-time 60 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 60 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-flash-tts:generateContent" \
   -d '{"contents":[{"role":"user","parts":[{"text":"METNİ BURAYA YAZ"}]}],"generationConfig":{"responseModalities":["AUDIO"],"speechConfig":{"voiceConfig":{"prebuiltVoiceConfig":{"voiceName":"Kore"}}}}}' \
   | python3 -c "import json,sys,base64,struct;d=json.load(sys.stdin);pcm=base64.b64decode(d['candidates'][0]['content']['parts'][0]['inlineData']['data']);sr=24000;ds=len(pcm);hdr=struct.pack('<4sI4s4sIHHIIHH4sI',b'RIFF',36+ds,b'WAVE',b'fmt ',16,1,1,sr,sr*2,2,16,b'data',ds);open('/tmp/kore_flash.wav','wb').write(hdr+pcm);print(f'OK {ds/(sr*2):.1f}s')" \
@@ -49,7 +49,7 @@ curl -s --max-time 60 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## 4. Flash Streaming
 
 ```bash
-curl -s --max-time 60 -N -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 60 -N -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-flash-tts:streamGenerateContent" \
   -d '{"contents":[{"role":"user","parts":[{"text":"METNİ BURAYA YAZ"}]}],"generationConfig":{"responseModalities":["AUDIO"],"speechConfig":{"voiceConfig":{"prebuiltVoiceConfig":{"voiceName":"Kore"}}}}}' \
   | python3 -c "
@@ -118,7 +118,7 @@ body={'contents':[{'role':'user','parts':[
 ]}]}
 with open('/tmp/stt_body.json','w') as f: json.dump(body,f)
 " && \
-curl -s --max-time 30 -N -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -N -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   -d @/tmp/stt_body.json \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-pro:streamGenerateContent" \
   | python3 -c "
@@ -143,7 +143,7 @@ body={'contents':[{'role':'user','parts':[
 ]}]}
 with open('/tmp/stt_body.json','w') as f: json.dump(body,f)
 " && \
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   -d @/tmp/stt_body.json \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-pro:generateContent" \
   | python3 -c "
@@ -157,7 +157,7 @@ print(d['candidates'][0]['content']['parts'][0]['text'])
 
 ```bash
 # Aynı body, sadece model değişiyor
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   -d @/tmp/stt_body.json \
   "https://aiplatform.vertexapis.com/v1/models/gemini-2.5-flash:generateContent" \
   | python3 -c "
@@ -210,7 +210,7 @@ Base URL: `https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/pub
 ## Gemini 3 Pro - Text Generation
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "Merhaba!"}]}]}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'])"
@@ -219,7 +219,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## Gemini 3 Pro - Streaming (alt=sse ÇALIŞMIYOR, JSON array formatı kullan)
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:streamGenerateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "Merhaba!"}]}]}' \
   | python3 -c "
@@ -245,7 +245,7 @@ body={'contents':[{'role':'user','parts':[
 ]}]}
 with open('/tmp/stt_body.json','w') as f: json.dump(body,f)
 " && \
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   -d @/tmp/stt_body.json \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'])"
@@ -257,7 +257,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 # ÇALIŞMIYOR: "You are not allowlisted to request audio output"
 # Pro, Flash, 3.1 Pro hepsinde aynı hata
 # Yetenek var ama vertexapis.com proxy'sinde allowlist kısıtı
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "Merhaba"}]}], "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": "Kore"}}}}}' \
   | python3 -m json.tool
@@ -266,7 +266,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## Gemini 3 Pro - Function Calling
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "Weather in London?"}]}], "tools": [{"functionDeclarations": [{"name": "get_weather", "description": "Get weather", "parameters": {"type": "OBJECT", "properties": {"city": {"type": "STRING"}}}}]}]}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(json.dumps(d['candidates'][0]['content']['parts'][0].get('functionCall',{}),indent=2))"
@@ -275,7 +275,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## Gemini 3 Pro - Code Execution
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "What is 2+2? Use code."}]}], "tools": [{"codeExecution": {}}]}' \
   | python3 -c "
@@ -291,7 +291,7 @@ for p in d['candidates'][0]['content']['parts']:
 ## Gemini 3 Pro - JSON Mode
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "List 3 Turkish cities with population"}]}], "generationConfig": {"responseMimeType": "application/json"}}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'])"
@@ -300,7 +300,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## Gemini 3 Pro - Google Search Grounding
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"contents": [{"role": "user", "parts": [{"text": "Bugün Türkiyede gündem ne?"}]}], "tools": [{"googleSearch": {}}]}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'][:500])"
@@ -311,7 +311,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ```bash
 # Resim base64 olarak gönderilir
 B64=$(base64 -w0 resim.png)
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d "{\"contents\": [{\"role\": \"user\", \"parts\": [{\"text\": \"Bu resimde ne var?\"}, {\"inlineData\": {\"mimeType\": \"image/png\", \"data\": \"$B64\"}}]}]}" \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'])"
@@ -320,7 +320,7 @@ curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Con
 ## Gemini 3 Pro - System Instruction
 
 ```bash
-curl -s --max-time 30 -H "x-api-key:sk-0f2246e77aa642cfafd6c4b0dd5fe14d" -H "Content-Type: application/json" \
+curl -s --max-time 30 -H "x-api-key:sk-your-api-key-here" -H "Content-Type: application/json" \
   "https://aiplatform.vertexapis.com/v1/projects/vertex/locations/us/publishers/google/models/gemini-3-pro-preview:generateContent" \
   -d '{"systemInstruction": {"parts": [{"text": "Sen bir korsan gibi konuş"}]}, "contents": [{"role": "user", "parts": [{"text": "Merhaba!"}]}]}' \
   | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['candidates'][0]['content']['parts'][0]['text'])"

@@ -8,7 +8,7 @@ import requests
 from flask import Flask, request, Response, jsonify
 
 CORTEX_BASE = "https://perplexity.claude.gg/v1/search"
-API_KEY = os.environ.get("PERPLEXITY_PROXY_KEY", "sk-0f2246e77aa642cfafd6c4b0dd5fe14d")
+API_KEY = os.environ.get("PERPLEXITY_PROXY_KEY")
 PORT = int(os.environ.get("PERPLEXITY_PROXY_PORT", "4016"))
 
 app = Flask(__name__)
@@ -85,6 +85,9 @@ def models():
 @app.route("/v1/chat/completions", methods=["POST"])
 @app.route("/chat/completions", methods=["POST"])
 def chat_completions():
+    if not API_KEY:
+        return jsonify({"error": "PERPLEXITY_PROXY_KEY is not set"}), 500
+
     body = request.get_json(force=True)
     query = extract_query(body.get("messages", []))
     model = body.get("model", "sonar")
